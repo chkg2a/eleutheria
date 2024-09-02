@@ -1,10 +1,12 @@
 import Post from "../model/post.model.js";
 import User from "../model/user.model.js";
-
+import jwt from "jsonwebtoken";
 const CreatePost=async(req,res)=>{
     try {
-        const email="test@gmail.com";
-    const user=await User.findOne({email});
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const decode=jwt.verify(token,process.env.JWT_SECRET_KEY);
+    const user=await User.findOne(decode.userId);
     const {title,description}=req.body;
     console.log(title,description);
     const post=await Post.create({title,description,User:user._id});

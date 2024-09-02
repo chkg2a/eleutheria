@@ -1,5 +1,5 @@
 import * as React from "react";
-import AvatarMD from "@/components/smallComponents/AvatarMD";
+import AvatarMD from "../components/smallComponents/AvatarMD";
 
 export default function CardWithForm({ profilePic, profileBanner, name }) {
   const initials = name

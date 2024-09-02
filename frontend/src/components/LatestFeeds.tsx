@@ -1,17 +1,7 @@
 import Feed from "@/components/Feed";
-import prisma from "@/lib/db";
 
 export default async function LatestFeeds() {
   // Fetch creators along with their posts and associated images
-  const creators = await prisma.user.findMany({
-    include: {
-      posts: {
-        include: {
-          image: true, // Include images related to each post
-        },
-      },
-    },
-  });
 
   return (
     <div className="flex flex-col">

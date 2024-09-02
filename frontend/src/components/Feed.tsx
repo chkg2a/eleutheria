@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
-import prisma from "@/lib/db"
 
 export default function Feed(
   { address, link, avatar, fullName, paragraph, image },
@@ -28,7 +26,7 @@ export default function Feed(
           <p className="py-2 text-sm md:text-lg">{paragraph}</p>
         </div>
       </div>
-      <Image
+      <img
         src={image}
         alt="test"
         height={1080}

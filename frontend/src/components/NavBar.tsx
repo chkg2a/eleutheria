@@ -1,11 +1,11 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { AiOutlineMessage } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { CiCircleMore } from "react-icons/ci";
-import { Button } from "@/components/ui/button";
-import AvatarMD from "@/components/smallComponents/AvatarMD";
+import { Button } from "../components/ui/button";
+import AvatarMD from "../components/smallComponents/AvatarMD";
 
 export default function NavBar({ }) {
   const user = {

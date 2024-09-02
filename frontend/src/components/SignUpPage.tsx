@@ -1,8 +1,6 @@
-"use client"
-import Link from "next/link";
+import {Link} from "react-router-dom";
 import { useState } from "react";
 import bcrypt from "bcryptjs";
-import { createUser } from "@/app/actions/auth";
 
 export default function SignUp() {  
   const [email,setEmail]=useState("");
@@ -13,7 +11,6 @@ export default function SignUp() {
       email,
       password
     }
-    await createUser(userData);
   }
   return (
     <div>

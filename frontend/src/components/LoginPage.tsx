@@ -1,16 +1,12 @@
-import Link from "next/link";
-import prisma from "@/lib/db";
+import { Link } from "react-router-dom";
+
 export default async function loginBox() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value; // Directly accessing the input value from the form
     const password = e.target.password.value;
-    const user = await prisma.sign.findUnique({
-      where: {
-        email: email,
-      },
-    });
   };
+
   return (
     <>
       <div>

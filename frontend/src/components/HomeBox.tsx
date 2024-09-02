@@ -1,5 +1,5 @@
 import { RxHamburgerMenu } from "react-icons/rx";
-import Link from "next/link"
+import { Link } from "react-router-dom"
 
 export default function HomeBox() {
   return (

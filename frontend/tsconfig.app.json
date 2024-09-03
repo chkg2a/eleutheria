@@ -11,7 +11,7 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

@@ -7,6 +7,8 @@ import Posts from "./pages/Posts"
 import Suggestions from "./components/Suggestions"
 import NavBar from "./components/NavBar"
 import TestUser from "./components/TestUserSignUp";
+import TestUserSignin from "./components/TestUserSignin";
+import CreatePostTest from "./components/CreatePostTest";
 function App() {
 
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/user" element={<TestUser/>} />  
+          <Route path="/signin" element={<TestUserSignin/>} />
+          <Route path="/createpost" element={<CreatePostTest/>} />
         </Routes>
             </div>
             <div className="col-span-4 md:col-span-3 hidden md:block w-full">

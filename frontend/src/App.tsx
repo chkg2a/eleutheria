@@ -6,7 +6,7 @@ import Signup from "./pages/Signup"
 import Posts from "./pages/Posts"
 import Suggestions from "./components/Suggestions"
 import NavBar from "./components/NavBar"
-
+import TestUser from "./components/TestUserSignUp";
 function App() {
 
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/posts" element={<Posts />} />
+          <Route path="/user" element={<TestUser/>} />  
         </Routes>
             </div>
             <div className="col-span-4 md:col-span-3 hidden md:block w-full">

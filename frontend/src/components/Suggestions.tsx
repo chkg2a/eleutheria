@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../components/ui/input";
 import { IoPricetagOutline } from "react-icons/io5";
 import { FiRefreshCcw } from "react-icons/fi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AvatarMD from "@/components/smallComponents/AvatarMD";
+import AvatarMD from "../components/smallComponents/AvatarMD";
 
 export default function Feed(
   { address, link, avatar, fullName, paragraph, image },

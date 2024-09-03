@@ -1,27 +1,28 @@
-import Feed from "@/components/Feed";
+import Feed from "../components/Feed";
 
-export default async function LatestFeeds() {
+export default function LatestFeeds() {
   // Fetch creators along with their posts and associated images
 
   return (
     <div className="flex flex-col">
-      {creators.map((creator) =>
-        creator.posts.map((post) => (
-          <Feed
-            key={post.id} // Use post.id as the unique key
-            address={creator.address}
-            link={`/creators/${creator.address}`}
-            avatar={`/images/${creator.profilePic}`}
-            username={creator.address}
-            fullName={creator.name}
-            paragraph={post.description}
-            image={`/images/${post.image.length > 0 ? post.image[0].imageUrl : ""}`}
-          />
-        ))
-      )}
     </div>
   );
 }
+
+      // {creators.map((creator) =>
+      //   creator.posts.map((post) => (
+      //     <Feed
+      //       key={post.id} // Use post.id as the unique key
+      //       address={creator.address}
+      //       link={`/creators/${creator.address}`}
+      //       avatar={`/images/${creator.profilePic}`}
+      //       username={creator.address}
+      //       fullName={creator.name}
+      //       paragraph={post.description}
+      //       image={`/images/${post.image.length > 0 ? post.image[0].imageUrl : ""}`}
+      //     />
+      //   ))
+      // )}
 
 // import Feed from "@/components/Feed";
 // import prisma from "@/lib/db";

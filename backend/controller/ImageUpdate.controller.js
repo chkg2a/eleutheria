@@ -1,27 +1,45 @@
 import User from "../model/user.model.js";
 import jwt from "jsonwebtoken";
+
 const ImageUpdate = async (req, res) => {
     try {
-        const {base64}=req.body;
+        const { base64 } = req.body;
         console.log(base64);
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        if (!token) {
-            return res.status(401).send({ message: "not logged in" });
-        }
-        const decode=jwt.verify(token,process.env.JWT_SECRET_KEY);
-        const user=await User.findOne({_id:decode.userId});
-        console.log(user);
-        if(!user){
-            return res.status(401).send({ message: "not logged in" });
-        }
-        user.profilePic=base64;
-        user.save();
-        res.status(200).send({message:"profile pic updated",user});
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({ message: "something went wrong" });
-    }
-}
 
-export default ImageUpdate
+        // Check for authorization header and token
+            const authHeader = req.headers['authorization'];
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return res.status(401).send({ message: "Not logged in" });
+            }
+
+            const token = authHeader.split(' ')[1];
+            if (!token) {
+                return res.status(401).send({ message: "Not logged in" });
+            }
+
+        // Verify the token
+        let decode;
+        try {
+            decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        } catch (err) {
+            return res.status(403).send({ message: "Invalid token" });
+        }
+
+        // Find the user by the decoded token's userId
+        const user = await User.findOne({ _id: decode.userId });
+        if (!user) {
+            return res.status(401).send({ message: "User not found" });
+        }
+
+        // Update and save the user's profile picture
+        user.profilePic = base64;
+        await user.save(); // Await the save operation
+
+        res.status(200).send({ message: "Profile pic updated", user });
+    } catch (error) {
+        console.error("Error in ImageUpdate:", error);
+        res.status(500).send({ message: "Something went wrong" });
+    }
+};
+
+export default ImageUpdate;

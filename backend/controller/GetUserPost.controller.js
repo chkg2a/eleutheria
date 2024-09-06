@@ -2,12 +2,12 @@ import User from "../model/user.model.js";
 import Post from "../model/post.model.js";
 
 
-const GetPost=async(req,res)=>{
-    const id="66d74b1bedaebc6735a2f3cd";
+const GetPostUser=async(req,res)=>{
+    const {id}=req.params;
 
 
     try {
-        const user=await User.find({});
+        const user=await User.findOne({_id:id}).populate('posts');
         console.log(user);
         res.status(200).json({message:"posts fetched successfully",user});
 
@@ -18,4 +18,4 @@ const GetPost=async(req,res)=>{
     }
 }
 
-export default GetPost
+export default GetPostUser

@@ -26,7 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/posts" element={<Posts />} />
-          <Route path="/user" element={<TestUser/>} />  
+          <Route path="/user/:id" element={<TestUser/>} />  
         </Routes>
             </div>
             <div className="col-span-4 md:col-span-3 hidden md:block w-full">

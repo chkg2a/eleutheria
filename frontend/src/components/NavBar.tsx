@@ -9,39 +9,39 @@ import AvatarMD from "../components/smallComponents/AvatarMD";
 
 export default function NavBar({ }) {
   const user = {
-    link: `/creators/0xabc`,
+    link: `/creators/66dc00993dacb24048f6be3b`,
     profilePic: "pfp1.jpg",
   };
   return (
     <div className="flex justify-end fixed">
       <div>
         <div className="flex flex-col gap-4 pr-14">
-          <Link className="flex w-full" href={user.link}>
+          <Link className="flex w-full" to={user.link}>
             <AvatarMD className="size-8" src={user.profilePic} NAME="BR" />
           </Link>
           <nav className="h-full flex-grow">
             <ul className="flex flex-col gap-8 text-xl">
               <li className="hover:text-black text-gray-400">
-                <Link href="/" className="flex items-center gap-4">
+                <Link to="/" className="flex items-center gap-4">
                   <FaHome className="inline text-4xl" />
                   <h1>Home</h1>
                 </Link>
               </li>
               <li className="hover:text-black text-gray-400">
-                <Link href="/notification" className="flex items-center gap-4">
+                <Link to="/notification" className="flex items-center gap-4">
                   <IoNotifications className="inline text-4xl" />
                   <h1>Notifications</h1>
                 </Link>
               </li>
               <li className="hover:text-black text-gray-400">
-                <Link href="/message" className="flex items-center gap-4">
+                <Link to="/message" className="flex items-center gap-4">
                   <AiOutlineMessage className="inline text-4xl" />
                   <h1>Messages</h1>
                 </Link>
               </li>
               <li className="hover:text-black text-gray-400">
                 <Link
-                  href="/creator/{user}"
+                  to={user.link}
                   className="flex items-center gap-4"
                 >
                   <CgProfile className="inline text-4xl" />
@@ -49,7 +49,7 @@ export default function NavBar({ }) {
                 </Link>
               </li>
               <li className="hover:text-black text-gray-400">
-                <Link href="#" className="flex items-center gap-4">
+                <Link to="#" className="flex items-center gap-4">
                   <CiCircleMore className="inline text-4xl" />
                   <h1>More</h1>
                 </Link>
@@ -58,7 +58,7 @@ export default function NavBar({ }) {
           </nav>
         </div>
         <Button asChild>
-          <Link className="rounded-full w-full mt-8" href="/posts/create">
+          <Link className="rounded-full w-full mt-8" to="/posts/create">
             New Post
           </Link>
         </Button>

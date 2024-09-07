@@ -1,6 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  @keyframes dots {
+    0%, 20% {
+      content: 'Loading';
+    }
+    40% {
+      content: 'Loading.';
+    }
+    60% {
+      content: 'Loading..';
+    }
+    80%, 100% {
+      content: 'Loading...';
+    }
+  }
+
+  .loading-text::after {
+    content: 'Loading';
+    animation: dots 1.5s steps(4, end) infinite;
+  }
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

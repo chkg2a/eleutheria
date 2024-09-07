@@ -9,50 +9,31 @@ import axios from "axios";
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState(null);
-  useEffect(()=>{
+
+  useEffect(() => {
     const handleCreator = async () => {
-      // const url = `http://localhost:3000/user/post/${id}`;
       try {
         const url = `http://localhost:3000/user/post/${id}`;
-  
-        // Fetch the creator data
+
         const res = await axios.get(url);
         setCreator(res.data);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     handleCreator();
-  },[]);
-  
+  }, [id]); // Added `id` to the dependency array to avoid warnings
+
   if (!creator) {
-    return <div>
-      
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-full text-4xl font-bold">
+        <span className="loading-text"></span>
+      </div>
+    );
   }
 
- 
-  
-
-
-  // const creator = await prisma.user.findUnique({
-  //   where: {
-  //     address: params.address,
-  //   },
-  //   include: {
-  //     posts: {
-  //       include: {
-  //         image: true, // Include images related to each post
-  //       },
-  //     },
-  //   },
-  // });
-  //
-  // const initials = creator.name
-  //   .split(" ")
-  //   .map((field) => field[0])
-  //   .join("");
+  const user = creator?.user || {}; // Safe access to nested properties
+  const { name = "Unknown", address = "Unknown Address", profilePic = "defaultAvatar.png"} = user; // Default values for user data
 
   return (
     <>
@@ -68,6 +49,8 @@ export default function Creator() {
                     width: "100%",
                     height: "100%",
                   }}
+                  src="path-to-image.jpg" // Replace with actual image URL
+                  alt="Cover"
                   height={1080}
                   width={1920}
                 />
@@ -82,26 +65,26 @@ export default function Creator() {
                   trigger={
                     <AvatarMD
                       className="size-32"
-                      src="logo.png"
-                      NAME="hello"
+                      src={profilePic} // Replace with actual avatar image
+                      NAME={name} // Using the fetched user name
                     />
                   }
                   content={<div>bro</div>}
                 />
               </div>
               <div className="flex text-4xl m-4">
-                <Link href="#" className="mx-4">
+                <Link to="#" className="mx-4">
                   <CiStar />
                 </Link>
-                <Link href="#">
+                <Link to="#">
                   <CiShare1 />
                 </Link>
               </div>
             </div>
             <div className="mt-[-3rem]">
-              <h1 className="font-bold text-2xl">name</h1>
+              <h1 className="font-bold text-2xl">{name}</h1>
               <p className="font-semibold text-gray-400 text-md">
-                Address
+                {address}
               </p>
               <p className="font-semibold text-gray-400 text-sm">
                 Last seen 24hrs ago

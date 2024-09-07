@@ -1,34 +1,37 @@
-import PopUp from "../components/smallComponents/PopUp"
+import PopUp from "../components/smallComponents/PopUp";
 import { CiImageOn } from "react-icons/ci";
 import { BiPoll } from "react-icons/bi";
 import { GoQuestion } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 export default function NewPost() {
   return (
-    <div className="w-full border-t border-b border-gray-300">
-      <Textarea
+    <form className="w-full border-t border-b border-gray-300">
+      <textarea
         placeholder="Compose a new Post"
-        className="border-l border-r"
+        className="p-4 w-full border-gray-300 focus:border-blue-500 outline-none resize-none"
+        rows="3"
       />
-      <div className="flex">
+      <div className="flex p-4">
         <div className="flex-grow flex text-2xl gap-2">
-          <PopUp trigger={<CiImageOn/>} content={<div>hello</div>}/>
-          <Link href="#">
+          <div>
+            <PopUp trigger={<CiImageOn />} content={<div>hello</div>} />
+          </div>
+          <Link to="#">
             <BiPoll />
           </Link>
-          <Link href="#">
+          <Link to="#">
             <GoQuestion />
           </Link>
         </div>
-        <div>
+        <div className="">
           <Button>
             New Post
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

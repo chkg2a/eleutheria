@@ -6,8 +6,6 @@ import Signup from "./pages/Signup";
 import Posts from "./pages/Posts";
 import Suggestions from "./components/Suggestions";
 import NavBar from "./components/NavBar";
-import TestUser from "./components/TestUserSignUp";
-import TestUserSignin from "./components/TestUserSignin";
 import CreatePostTest from "./components/CreatePostTest";
 import TestGetPost from "./components/TestGetPost";
 import ConnectWallet from "./components/ConnectWallet";
@@ -47,9 +45,8 @@ function MainLayout() {
           <div className="col-span-full md:col-span-6 lg:col-span-4 flex flex-col border-gray-300 border-l border-r">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/creators" element={<Creators />} />
+              <Route path="/creator/:id" element={<Creators />} />
               <Route path="/posts" element={<Posts />} />
-              <Route path="/user/:id" element={<TestUser />} />
               <Route path="/createpost" element={<CreatePostTest />} />
               <Route path="/getpost" element={<TestGetPost />} />
               <Route path="/connectwallet" element={<ConnectWallet />} />

@@ -29,9 +29,7 @@ const ConnectWallet = () => {
             const contract= new ethers.Contract(contractAddress,Abi,signer);
             setContract(contract);
             console.log(selectedAccount,provider,signer,contract);
-            if(selectedAccount){
-                navigate('/getpost');
-            }
+            
 
         } catch (error) {
             console.log(error);

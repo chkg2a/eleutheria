@@ -4,12 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 import { CiShare1 } from "react-icons/ci";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
+import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
-
+import useWeb3State from "../store/Web3State";
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState(null);
-
+  const {provider,signer,contract}=useWeb3State((state)=>state);
   useEffect(() => {
     const handleCreator = async () => {
       try {
@@ -30,6 +31,11 @@ export default function Creator() {
         <span className="loading-text"></span>
       </div>
     );
+  }
+  const join=async()=>{
+    const tx=await contract.join("0x71f6237984e4C2d9030A71f57BFD3BA146180cA4");
+    tx.wait();
+    alert("tx");
   }
 
   const user = creator?.user || {}; // Safe access to nested properties
@@ -97,7 +103,10 @@ export default function Creator() {
               <h1 className="font-semibold text-gray-800 text-xl mb-4">
                 Subscription
               </h1>
+              <ConnectWallet/>
             </div>
+
+          <button onClick={join}>join</button>
           </div>
         </div>
       </div>

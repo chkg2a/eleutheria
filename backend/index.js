@@ -8,6 +8,8 @@ import imageUpdaterrouter from './route/ImageUpdate.route.js';
 import GetPostrouter from './route/GetPost.route.js';
 //import GetProfile from './route/GetProfilePic.route.js';
 import GetPostrouterUser from './route/GetUserPost.route.js';
+import GetUserrouter from './route/GetUser.route.js';
+import UpdateAddressrouter from './route/UpdateAddress.route.js';
 const app=express();
 const PORT=process.env.PORT || 3001;
 app.use(express.json());
@@ -24,7 +26,8 @@ app.use("/image",imageUpdaterrouter);
 app.use("/home",GetPostrouter);
 //app.use("profile",GetProfile);
 app.use("/user",GetPostrouterUser);
-
+app.use("/data",GetUserrouter);
+app.use("/update",UpdateAddressrouter);
 
 
 const startServer=async()=>{

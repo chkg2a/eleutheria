@@ -1,10 +1,10 @@
 import PopUp from "../components/smallComponents/PopUp";
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 import { CiShare1 } from "react-icons/ci";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
-import axios from "axios"
+import axios from "axios";
 
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
@@ -13,20 +13,24 @@ export default function Creator() {
   if (!creator) {
     return <div>Loading...</div>;
   }
+
   useEffect(() => {
     // Construct the URL with the dynamic id
-    const url = `http://localhost:3000/api/creators/${id}`;
-    
-    // Fetch the creator data
-    axios.get(url)
-      .then(response => {
-        setCreator(response.data); // Set the data to state
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.error('Error fetching creator data:', error);
-      });
-  }, [id]);
+    const handleCreator = async () => {
+      // const url = `http://localhost:3000/user/post/${id}`;
+      try {
+        const url = "http://localhost:3000/user/post/66dc00993dacb24048f6be3b";
+
+        // Fetch the creator data
+        const res = await axios.get(url);
+        setCreator(res.data);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+      handleCreator();
+    };
+  });
 
   // const creator = await prisma.user.findUnique({
   //   where: {

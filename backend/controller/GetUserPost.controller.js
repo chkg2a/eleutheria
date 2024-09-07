@@ -3,11 +3,10 @@ import Post from "../model/post.model.js";
 
 
 const GetPostUser=async(req,res)=>{
-    const {id}=req.params;
-
+    const {postId}=req.params;
 
     try {
-        const user=await User.findOne({_id:id}).populate('posts');
+        const user=await User.findOne({_id:postId}).populate('posts');
         console.log(user);
         res.status(200).json({message:"posts fetched successfully",user});
 

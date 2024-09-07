@@ -3,13 +3,13 @@ import Post from "../model/post.model.js";
 
 
 const GetPost=async(req,res)=>{
-    const id="66d74b1bedaebc6735a2f3cd";
+    
 
 
     try {
-        const user=await User.find({});
-        console.log(user);
-        res.status(200).json({message:"posts fetched successfully",user});
+        const post=await Post.find({});
+       console.log(post);
+        res.status(200).json({message:"posts fetched successfully",post});
 
 
     } catch (error) {

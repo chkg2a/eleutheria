@@ -4,7 +4,7 @@ import Post from "../model/post.model.js";
 
 const GetPostUser=async(req,res)=>{
     const {postId}=req.params;
-
+    console.log("hitted");
     try {
         const user=await User.findOne({_id:postId}).populate('posts');
         console.log(user);

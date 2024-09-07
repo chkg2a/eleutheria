@@ -9,18 +9,12 @@ import axios from "axios";
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState(null);
-
-  if (!creator) {
-    return <div>Loading...</div>;
-  }
-
-  useEffect(() => {
-    // Construct the URL with the dynamic id
+  useEffect(()=>{
     const handleCreator = async () => {
       // const url = `http://localhost:3000/user/post/${id}`;
       try {
-        const url = "http://localhost:3000/user/post/66dc00993dacb24048f6be3b";
-
+        const url = `http://localhost:3000/user/post/${id}`;
+  
         // Fetch the creator data
         const res = await axios.get(url);
         setCreator(res.data);
@@ -28,9 +22,19 @@ export default function Creator() {
       } catch (error) {
         console.log(error);
       }
-      handleCreator();
-    };
-  });
+    }
+    handleCreator();
+  },[]);
+  
+  if (!creator) {
+    return <div>
+      
+    </div>;
+  }
+
+ 
+  
+
 
   // const creator = await prisma.user.findUnique({
   //   where: {

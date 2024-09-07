@@ -32,7 +32,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/posts" element={<Posts />} />
-          <Route path="/user" element={<TestUser/>} />  
+          <Route path="/user/:id" element={<TestUser/>} />  
           <Route path="/signin" element={<TestUserSignin/>} />
           <Route path="/createpost" element={<CreatePostTest/>} />
           <Route path="/getpost" element={<TestGetPost/>} />

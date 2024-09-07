@@ -1,4 +1,4 @@
-import LoginBox from "../components/LoginPage";
+import SignUpPage from "../components/SignUpPage";
 import Banner from "../components/Banner";
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
           <Banner />
         </div>
         <div className="h-full flex items-start justify-start p-40">
-          <LoginBox />
+          <SignUpPage />
         </div>
       </div>
     </div>

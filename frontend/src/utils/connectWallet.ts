@@ -2,8 +2,16 @@ import { ethers } from "ethers";
 import useWeb3State from "../store/Web3State";
 import axios from "axios";
 import Abi from "./ABI.json";
+
+interface Web3State {
+  address : string,
+  provider : string,
+  signer : any,
+  contract : any
+}
+
 const connectWallet=async()=>{
-    const {setAddress,setProvider,setSigner,setContract}=useWeb3State((state)=>state);
+    const {setAddress,setProvider,setSigner,setContract}=useWeb3State((state : Web3State)=>state);
     try {
         const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
         const selectedAccount=accounts[0];

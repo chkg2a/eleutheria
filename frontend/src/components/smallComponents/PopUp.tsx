@@ -3,8 +3,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ReactNode } from "react";
 
-export default function PopUp({trigger, content}) {
+interface PopUpProps {
+  trigger : ReactNode,
+  content : ReactNode
+}
+
+export default function PopUp({trigger, content} : PopUpProps) {
   return (
     <Popover>
       <PopoverTrigger>{trigger}</PopoverTrigger>

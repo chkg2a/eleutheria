@@ -1,4 +1,3 @@
-import React from 'react'
 import axios from 'axios'
 import useWeb3State from "../store/Web3State";
 

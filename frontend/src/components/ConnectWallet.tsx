@@ -1,4 +1,3 @@
-import React from 'react'
 import {ethers} from 'ethers'
 import useWeb3State from "../store/Web3State";
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +14,6 @@ interface Web3State {
 const ConnectWallet = () => {
     const navigate=useNavigate();
     const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state: Web3State)=>state);
-    console.log(setAddress,setProvider,setSigner);
     const handleConnect=async()=>{
         try {
             const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
@@ -27,7 +25,6 @@ const ConnectWallet = () => {
                   Authorization: `Bearer ${token}`, 
               }
           });
-            console.log(res.data.address);
             setAddress(selectedAccount);
             const provider=new ethers.BrowserProvider(window.ethereum);
             const signer=await provider.getSigner();
@@ -36,11 +33,7 @@ const ConnectWallet = () => {
             const contractAddress="0x8F88Ad8D58D4519d0b1915C72AC9c7De46c936Fe";
             const contract= new ethers.Contract(contractAddress,Abi,signer);
             setContract(contract);
-            console.log(selectedAccount,provider,signer,contract);
             const member=await contract.members(creatorAddress,selectedAccount);
-            console.log(member);
-            
-
         } catch (error) {
             console.log(error);
         }

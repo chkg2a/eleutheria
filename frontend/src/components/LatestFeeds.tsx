@@ -1,13 +1,13 @@
 import Feed from "../components/Feed";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import useWeb3State from "@/store/Web3State";
+
 interface Post {
   _id: string;
   title: string;
   description: string;
   image: string;
-  createdAt: string
+  createdAt: string;
 }
 
 interface User {
@@ -19,27 +19,79 @@ interface User {
   posts: Post[];
 }
 
-export default function LatestFeeds() {
+interface LatestFeedsProps {
+  onlyCreator: boolean;
+  userId?: string; // Fix userId type to be string
+}
+
+export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
   const [users, setUsers] = useState<User[]>([]);
-  const {user}=useWeb3State((state)=>state);
-  console.log(user)
+  const [user, setUser] = useState<User | null>(null); // Handle user as nullable
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "http://localhost:3000/home/getpost";
+        const url = `http://localhost:3000/home/getpost`;
         const res = await axios.get(url);
         setUsers(res.data.user);
+        console.log("All Users", res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
-  }, []);
+    const fetchSingleUser = async () => {
+      try {
+        const url = `http://localhost:3000/user/post/${userId}`;
+        const res = await axios.get(url);
+        setUser(res.data.user);
+        console.log("Single User", res.data.user);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  if (!users || users.length === 0) {
-    return ( <div className="flex justify-center items-center h-full text-4xl font-bold">
+    if (onlyCreator && userId) {
+      fetchSingleUser(); // Only fetch single user if `onlyCreator` is true and `userId` exists
+    } else {
+      fetchData();
+    }
+  }, [onlyCreator, userId]); // Add onlyCreator and userId to the dependency array
+
+  // Loading state handling
+  if (onlyCreator && !user) {
+    return (
+      <div className="w-full flex justify-center items-center h-full text-4xl font-bold">
         <span className="loading-text"></span>
+      </div>
+    );
+  }
+
+  if (!onlyCreator && (!users || users.length === 0)) {
+    return (
+      <div className="w-full flex justify-center items-center h-full text-4xl font-bold">
+        <span className="loading-text"></span>
+      </div>
+    );
+  }
+
+  if (onlyCreator && user) {
+    return (
+      <div className="w-full flex flex-col">
+        {user.posts && user.posts.length > 0
+          ? user.posts.map((post) => (
+              <Feed
+                key={post._id}
+                address={user.address}
+                link={`/creator/${user._id}`}
+                avatar={`${user.profilePic}`}
+                fullName={user.name}
+                createdAt={post.createdAt}
+                paragraph={post.description || "No description available"}
+                image={`${post.image}`}
+              />
+            ))
+          : <p>No posts available</p>}
       </div>
     );
   }
@@ -47,12 +99,9 @@ export default function LatestFeeds() {
   return (
     <div className="flex flex-col">
       {users.map((user) => (
-        <div
-          key={user._id}
-        >
-          {user.posts.length > 0
-            ? (
-              user.posts.map((post) => (
+        <div key={user._id}>
+          {user.posts && user.posts.length > 0
+            ? user.posts.map((post) => (
                 <Feed
                   key={post._id}
                   address={user.address}
@@ -64,8 +113,7 @@ export default function LatestFeeds() {
                   image={`${post.image}`}
                 />
               ))
-            )
-            : null}
+            : <p>No posts available</p>}
         </div>
       ))}
     </div>

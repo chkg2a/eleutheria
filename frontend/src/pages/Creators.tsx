@@ -1,12 +1,14 @@
 import PopUp from "../components/smallComponents/PopUp";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CiStar, CiShare1 } from "react-icons/ci";
+import { CiShare1, CiStar } from "react-icons/ci";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
 import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
+import LatestFeeds from "@/components/LatestFeeds";
+import { Button } from "@/components/ui/button"
 
 interface Web3State {
   address: string;
@@ -19,14 +21,25 @@ interface Creator {
   user: Record<string, any>;
 }
 
+interface User {
+  address: string;
+  _id: string;
+  name: string;
+  profilePic?: string;
+  profileBanner?: string;
+}
+
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
+  const { user } = useWeb3State((state: { user: User }) => state);
+  const [sameCreator, setSameCreator] = useState(false);
   const [creator, setCreator] = useState<Creator>();
   const [creatorAddress, setcreatorAddress] = useState("");
-  const { contract, setCreatorAddress } = useWeb3State((state: Web3State) => state);
-
+  const { contract, setCreatorAddress } = useWeb3State((state: Web3State) =>
+    state
+  );
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
-  const [profilePic, setProfilePic] = useState<string>("defaultAvatar.png"); // For profile picture
+  const [profilePic, setProfilePic] = useState<string>(""); // For profile picture
 
   // Automatically uploads the image after conversion for banner
   const uploadBanner = async (base64: string) => {
@@ -46,7 +59,7 @@ export default function Creator() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log(res);
     } catch (error) {
@@ -72,7 +85,7 @@ export default function Creator() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log(res);
     } catch (error) {
@@ -136,7 +149,7 @@ export default function Creator() {
     handleCreator();
   }, [id]);
 
-  if (!creator) {
+  if (!creator || !user) {
     return (
       <div className="flex justify-center items-center h-full text-4xl font-bold">
         <span className="loading-text"></span>
@@ -152,20 +165,50 @@ export default function Creator() {
     alert("tx");
   };
 
-  const user = creator?.user || {};
+  const creatorUser = creator?.user || {};
   const {
     name = "Unknown",
     address = "Unknown Address",
-  } = user; // Default values for user data
+  } = creatorUser; // Default values for user data
+
+  if (creatorUser._id === user._id) {
+    setSameCreator(true);
+  }
 
   return (
     <>
       <div className="w-full">
         <div className="flex flex-col">
-          {/* For Banner Picture */}
-          <PopUp
-            trigger={
-              <div className="w-full h-[400px]">
+          <div className="w-full h-[400px]">
+            {sameCreator
+              ? (
+                <PopUp
+                  trigger={
+                    <div className="w-full h-[400px]">
+                      <img
+                        style={{
+                          overflow: "hidden",
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        src={bannerPic || user.profileBanner}
+                        alt="Cover"
+                        height={1080}
+                        width={1920}
+                      />
+                    </div>
+                  }
+                  content={
+                    <input
+                      accept="image/*"
+                      type="file"
+                      onChange={changetoBase64Banner}
+                    />
+                  }
+                />
+              )
+              : (
                 <img
                   style={{
                     overflow: "hidden",
@@ -173,44 +216,45 @@ export default function Creator() {
                     width: "100%",
                     height: "100%",
                   }}
-                  src={bannerPic || "path-to-default-banner.jpg"} // Replace with actual banner image
+                  src={creatorUser.profileBanner}
                   alt="Cover"
                   height={1080}
                   width={1920}
                 />
-              </div>
-            }
-            content={
-              <input
-                accept="image/*"
-                type="file"
-                onChange={changetoBase64Banner} // Auto-upload banner image after selection
-              />
-            }
-          />
-          
-          <div className="px-16">
-            <div className="flex relative">
+              )}
+          </div>
+
+          <div className="w-full">
+            <div className="px-16 flex relative">
               <div className="flex-grow relative bottom-[4rem]">
-                {/* For Profile Picture */}
-                <PopUp
-                  trigger={
+                {sameCreator
+                  ? (
+                    <PopUp
+                      trigger={
+                        <AvatarMD
+                          className="size-32"
+                          src={profilePic || user.profilePic || "/pfp1.jpg"}
+                          NAME={user.name}
+                        />
+                      }
+                      content={
+                        <input
+                          accept="image/*"
+                          type="file"
+                          onChange={changetoBase64ProfilePic}
+                        />
+                      }
+                    />
+                  )
+                  : (
                     <AvatarMD
                       className="size-32"
-                      src={profilePic || "defaultAvatar.png"} // Replace with actual avatar image
-                      NAME={name} // Using the fetched user name
+                      src={creatorUser.profilePic}
+                      NAME={name}
                     />
-                  }
-                  content={
-                    <input
-                      accept="image/*"
-                      type="file"
-                      onChange={changetoBase64ProfilePic} // Auto-upload profile picture after selection
-                    />
-                  }
-                />
+                  )}
               </div>
-              <div className="flex text-4xl m-4">
+              <div className="px-16 flex text-4xl m-4">
                 <Link to="#" className="mx-4">
                   <CiStar />
                 </Link>
@@ -219,23 +263,31 @@ export default function Creator() {
                 </Link>
               </div>
             </div>
-            <div className="mt-[-3rem]">
+            <div className="px-16 mt-[-3rem]">
               <h1 className="font-bold text-2xl">{name}</h1>
               <p className="font-semibold text-gray-400 text-md">{address}</p>
               <p className="font-semibold text-gray-400 text-sm">
                 Last seen 24hrs ago
               </p>
             </div>
-            <main className="mt-4 mb-4">
-              <p className="text-xl">href</p>
-            </main>
-            <div className="border border-gray-400 w-full p-6">
-              <h1 className="font-semibold text-gray-800 text-xl mb-4">
-                Subscription
-              </h1>
-              <ConnectWallet />
-            </div>
-            <button onClick={join}>join</button>
+            {sameCreator
+              ? (
+                null
+              )
+              : (
+                <>
+                  <div className="border-t border-b border-gray-400 w-full p-6">
+                    <h1 className="font-semibold text-gray-800 text-xl mb-4">
+                      Subscription
+                    </h1>
+                    <div className="flex justify-evenly ">
+                      <ConnectWallet />
+                      <Button onClick={join}>Join</Button>
+                    </div>
+                  </div>
+                </>
+              )}
+            <LatestFeeds onlyCreator userId={creatorUser._id} />
           </div>
         </div>
       </div>

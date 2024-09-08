@@ -145,10 +145,14 @@ export default function Creator() {
   }
 
   const join = async () => {
+  //  const url="http://localhost:3000/internal/getuserid";
+    
     const tx = await contract.join(creatorAddress, {
       value: ethers.parseEther("0.0001"),
     });
     await tx.wait();
+   // const res=await axios.post(url,{id});
+   // console.log(res);
     alert("tx");
   };
 

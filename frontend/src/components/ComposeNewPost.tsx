@@ -1,11 +1,12 @@
 import PopUp from "../components/smallComponents/PopUp";
 import { CiImageOn } from "react-icons/ci";
 import { BiPoll } from "react-icons/bi";
-import { GoQuestion } from "react-icons/go";
+import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export default function NewPost() {
+  
   return (
     <form className="w-full border-t border-b border-gray-300">
       <textarea
@@ -21,9 +22,9 @@ export default function NewPost() {
           <Link to="#">
             <BiPoll />
           </Link>
-          <Link to="#">
-            <GoQuestion />
-          </Link>
+          <div>
+            <Checkbox />   
+          </div>
         </div>
         <div className="">
           <Button>

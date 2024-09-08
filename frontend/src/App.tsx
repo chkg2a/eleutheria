@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import CreatePostTest from "./components/CreatePostTest";
 import TestGetPost from "./components/TestGetPost";
 import ConnectWallet from "./components/ConnectWallet";
+import { Toaster } from "@/components/ui/toaster"
 import TestToken from "./components/TestToken";
 function App() {
   return (
@@ -56,6 +57,7 @@ function MainLayout() {
           <div className="col-span-4 md:col-span-3 hidden md:block w-full">
             <Suggestions />
           </div>
+          <Toaster/>
         </div>
       )}
     </>

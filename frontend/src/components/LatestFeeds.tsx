@@ -6,6 +6,8 @@ interface Post {
   _id: string;
   title: string;
   description: string;
+  image: string;
+  createdAt: string
 }
 
 interface User {
@@ -26,7 +28,6 @@ export default function LatestFeeds() {
         const url = "http://localhost:3000/home/getpost";
         const res = await axios.get(url);
         setUsers(res.data.user);
-        console.log(res.data.user[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -36,9 +37,8 @@ export default function LatestFeeds() {
   }, []);
 
   if (!users || users.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-full text-4xl font-bold">
-        <span className="loading-text">Loading...</span>
+    return ( <div className="flex justify-center items-center h-full text-4xl font-bold">
+        <span className="loading-text"></span>
       </div>
     );
   }
@@ -58,12 +58,13 @@ export default function LatestFeeds() {
                   link={`/creators/${user.address}`}
                   avatar={`/images/${user.profilePic}`}
                   fullName={user.name}
+                  createdAt={post.createdAt}
                   paragraph={post.description || "No description available"}
-                  image={`/images/${user.profilePic}`}
+                  image={`${post.image}`}
                 />
               ))
             )
-            : <p>No posts available</p>}
+            : null}
         </div>
       ))}
     </div>

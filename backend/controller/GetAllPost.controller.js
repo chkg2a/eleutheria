@@ -4,8 +4,6 @@ import Post from "../model/post.model.js";
 
 const GetPost=async(req,res)=>{
     
-
-
     try {
         const user=await User.find();
        

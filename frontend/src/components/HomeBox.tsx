@@ -1,11 +1,11 @@
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom"
+import PopUp from "../components/smallComponents/PopUp";
 
 export default function HomeBox() {
   return (
     <div className="flex w-full justify-between p-5">
       <h1 className="text-xl font-semibold">Home</h1>
-      <Link to="/"><RxHamburgerMenu/></Link>
+      <PopUp trigger={<div>hell</div>} content={<RxHamburgerMenu />} />
     </div>
   );
 }

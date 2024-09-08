@@ -10,13 +10,24 @@ import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
 import connectWallet from "../utils/connectWallet";
 import Abi from "./ABI.json";
+
+interface Web3State {
+  address: string;
+  provider: string;
+  signer: any;
+  contract: any;
+}
+
+interface Creator {
+  user: Record<string, any>;  // or a more specific type for `user`
+}
+
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
-  const [creator, setCreator] = useState(null);
- const [creatorAddress,setcreatorAddress]=useState("");
-  const {contract,setCreatorAddress}=useWeb3State((state)=>state);
+  const [creator, setCreator] = useState<Creator>();
+  const [creatorAddress,setcreatorAddress]=useState("");
+  const {contract,setCreatorAddress}=useWeb3State((state : Web3State)=>state);
  
-
   useEffect(() => {
       const handleCreator = async () => {
       try {
@@ -47,9 +58,12 @@ export default function Creator() {
     alert("tx");
   }
   
-
-  const user = creator?.user || {}; // Safe access to nested properties
-  const { name = "Unknown", address = "Unknown Address", profilePic = "defaultAvatar.png"} = user; // Default values for user data
+  const user = creator?.user || {};
+  const {
+    name = "Unknown",
+    address = "Unknown Address",
+    profilePic = "defaultAvatar.png",
+  } = user; // Default values for user data
 
   return (
     <>
@@ -113,11 +127,9 @@ export default function Creator() {
               <h1 className="font-semibold text-gray-800 text-xl mb-4">
                 Subscription
               </h1>
-              
+              <ConnectWallet />
             </div>
-        <ConnectWallet/>
-        <button onClick={join}>join</button>
-         
+            <button onClick={join}>join</button>
           </div>
         </div>
       </div>

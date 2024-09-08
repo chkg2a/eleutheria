@@ -1,8 +1,16 @@
 import React from 'react'
 import axios from 'axios'
 import useWeb3State from "../store/Web3State";
+
+interface Web3State {
+  address : string,
+  provider : string,
+  signer : any,
+  contract : any
+}
+
 const TestGetPost = () => {
-    const {address,provider,signer,contract}=useWeb3State((state)=>state);
+    const {address,provider,signer,contract}=useWeb3State((state : Web3State)=>state);
     console.log(address,provider,signer,contract);
     const handle=async()=>{
         try {

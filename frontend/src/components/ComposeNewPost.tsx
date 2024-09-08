@@ -3,7 +3,6 @@ import { CiImageOn } from "react-icons/ci";
 import { BiPoll } from "react-icons/bi";
 import { GoQuestion } from "react-icons/go";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 
 export default function NewPost() {

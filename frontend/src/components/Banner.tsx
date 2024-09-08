@@ -1,11 +1,10 @@
-
 export default function Banner() {
   return (
-    <div className="flex justify-end w-full py-16 px-32">
-      <div className="flex flex-col">
+    <div className="flex justify-center items-center w-full h-full">
+      <div className="flex flex-col text-white">
         <div className="flex">
-          <img src="/logo.png" alt="logo" width={50} height={50} />
-          <h1 className="text-2xl flex mx-4 items-center">CryptoFans</h1>
+          <img src="/logo.png" alt="logo" width={150} height={150} />
+          <h1 className="text-2xl flex mx-4 items-center">Eleutheria</h1>
         </div>
         <div>
           <p>Sign up to support your favorite creators</p>

@@ -7,7 +7,7 @@ import { CiCircleMore } from "react-icons/ci";
 import { Button } from "../components/ui/button";
 import AvatarMD from "../components/smallComponents/AvatarMD";
 
-export default function NavBar({ }) {
+export default function NavBar() {
   const user = {
     link: `/creator/66dc00993dacb24048f6be3b`,
     profilePic: "pfp1.jpg",

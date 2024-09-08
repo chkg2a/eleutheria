@@ -25,8 +25,8 @@ export default function Feed(
   const timeAgo = formatDistanceToNow(createdAtDate, { addSuffix: true });
 
   return (
-    <div key={address}>
-            <div className="h-[1px] w-full border-t my-8"/>
+    <div key={address} className="border-gray-300 border-l border-r">
+      <div className="h-[1px] w-full border-t" />
       <div className="p-4">
         <div className="flex">
           <AvatarMD className="size-16" src={avatar} NAME={initials} />

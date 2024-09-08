@@ -35,6 +35,7 @@ export default function Suggestions() {
   // Slice the array to get only the first 3 users
   const limitedUsers = users.slice(0, 3);
 
+  console.log(limitedUsers)
   return (
     <div className="fixed min-w-[368px] max-h-[128px]">
       <div>

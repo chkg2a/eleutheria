@@ -1,4 +1,5 @@
-import PopUp from "../components/smallComponents/PopUp"; import { useEffect, useState } from "react";
+import PopUp from "../components/smallComponents/PopUp";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CiShare1, CiStar } from "react-icons/ci";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
@@ -7,13 +8,14 @@ import axios from "axios";
 import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
 import LatestFeeds from "@/components/LatestFeeds";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface Web3State {
   address: string;
   provider: string;
   signer: any;
   contract: any;
+  member: boolean; // Ensure `member` is part of the Web3State
 }
 
 interface Creator {
@@ -30,28 +32,47 @@ interface User {
 
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
-  const { user } = useWeb3State((state: { user: User }) => state);
+  const { user, contract, member } = useWeb3State((state: Web3State) => ({
+    user: state.user,
+    contract: state.contract,
+    member: state.member,
+  }));
+
   const [sameCreator, setSameCreator] = useState(false);
   const [creator, setCreator] = useState<Creator>();
-  const [creatorAddress, setcreatorAddress] = useState("");
-  const { contract, setCreatorAddress,member } = useWeb3State((state: Web3State) => state);
-  console.log(member);
+  const [creatorAddress, setCreatorAddress] = useState("");
 
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
   const [profilePic, setProfilePic] = useState<string>(""); // For profile picture
 
-  // Automatically uploads the image after conversion for banner
-  const uploadBanner = async (base64: string) => {
-    if (!base64) {
-      console.log("No banner image to upload");
-      return;
+  useEffect(() => {
+    const handleCreator = async () => {
+      try {
+        const url = `http://localhost:3000/user/post/${id}`;
+        const res = await axios.get(url);
+        setCreatorAddress(res.data.user.address);
+        setCreator(res.data);
+      } catch (error) {
+        console.error("Error fetching creator:", error);
+      }
+    };
+    handleCreator();
+  }, [id]);
+
+  useEffect(() => {
+    if (creator && user) {
+      setSameCreator(creator.user._id === user._id);
     }
+  }, [creator, user]);
+
+  const uploadBanner = async (base64: string) => {
+    if (!base64) return;
 
     const url = `http://localhost:3000/user/update/bannerpic`;
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.post(
+      await axios.post(
         url,
         { base64 },
         {
@@ -60,24 +81,19 @@ export default function Creator() {
           },
         },
       );
-      console.log(res);
     } catch (error) {
       console.error("Error uploading banner image:", error);
     }
   };
 
-  // Automatically uploads the image after conversion for profile
   const uploadProfilePic = async (base64: string) => {
-    if (!base64) {
-      console.log("No profile image to upload");
-      return;
-    }
+    if (!base64) return;
 
     const url = `http://localhost:3000/user/update/imageupdate`;
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.post(
+      await axios.post(
         url,
         { base64 },
         {
@@ -86,13 +102,11 @@ export default function Creator() {
           },
         },
       );
-      console.log(res);
     } catch (error) {
       console.error("Error uploading profile image:", error);
     }
   };
 
-  // Convert banner to base64 and upload
   const changetoBase64Banner = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -101,8 +115,8 @@ export default function Creator() {
       reader.onload = () => {
         if (reader.result) {
           const base64 = reader.result as string;
-          setBannerPic(base64); // Set the banner in the state
-          uploadBanner(base64); // Automatically upload the banner after conversion
+          setBannerPic(base64);
+          uploadBanner(base64);
         }
       };
 
@@ -112,7 +126,6 @@ export default function Creator() {
     }
   };
 
-  // Convert profile picture to base64 and upload
   const changetoBase64ProfilePic = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -121,8 +134,8 @@ export default function Creator() {
       reader.onload = () => {
         if (reader.result) {
           const base64 = reader.result as string;
-          setProfilePic(base64); // Set the profile picture in the state
-          uploadProfilePic(base64); // Automatically upload the profile picture after conversion
+          setProfilePic(base64);
+          uploadProfilePic(base64);
         }
       };
 
@@ -132,21 +145,18 @@ export default function Creator() {
     }
   };
 
-  useEffect(() => {
-    const handleCreator = async () => {
-      try {
-        const url = `http://localhost:3000/user/post/${id}`;
-
-        const res = await axios.get(url);
-        setCreatorAddress(res.data.user.address);
-        setcreatorAddress(res.data.user.address);
-        setCreator(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    handleCreator();
-  }, [id]);
+  const join = async () => {
+    try {
+      const tx = await contract.join(creatorAddress, {
+        value: ethers.parseEther("0.0001"),
+      });
+      await tx.wait();
+      alert("Joined successfully");
+    } catch (error) {
+      console.error("Error joining:", error);
+      alert("Failed to join");
+    }
+  };
 
   if (!creator || !user) {
     return (
@@ -156,49 +166,23 @@ export default function Creator() {
     );
   }
 
-  const join = async () => {
-  //  const url="http://localhost:3000/internal/getuserid";
-    
-    const tx = await contract.join(creatorAddress, {
-      value: ethers.parseEther("0.0001"),
-    });
-    await tx.wait();
-   // const res=await axios.post(url,{id});
-   // console.log(res);
-    alert("tx");
-  };
-
-  const creatorUser = creator?.user || {};
-  const {
-    name = "Unknown",
-    address = "Unknown Address",
-  } = creatorUser; // Default values for user data
-
-  if (creatorUser._id === user._id) {
-    setSameCreator(true);
-  }
+  const creatorUser = creator.user;
+  const { name = "Unknown", address = "Unknown Address" } = creatorUser; // Default values for user data
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full h-full">
         <div className="flex flex-col">
           <div className="w-full h-[400px]">
             {sameCreator
               ? (
                 <PopUp
                   trigger={
-                    <div className="w-full h-[400px]">
+                    <div className="relative w-full h-[400px] overflow-hidden">
                       <img
-                        style={{
-                          overflow: "hidden",
-                          objectFit: "cover",
-                          width: "100%",
-                          height: "100%",
-                        }}
+                        className="absolute top-0 left-0 w-full h-full object-cover"
                         src={bannerPic || user.profileBanner}
                         alt="Cover"
-                        height={1080}
-                        width={1920}
                       />
                     </div>
                   }
@@ -212,18 +196,13 @@ export default function Creator() {
                 />
               )
               : (
-                <img
-                  style={{
-                    overflow: "hidden",
-                    objectFit: "cover",
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  src={creatorUser.profileBanner}
-                  alt="Cover"
-                  height={1080}
-                  width={1920}
-                />
+                <div className="relative w-full h-[400px] overflow-hidden">
+                  <img
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    src={creatorUser.profilePic}
+                    alt="Cover"
+                  />
+                </div>
               )}
           </div>
 
@@ -266,7 +245,7 @@ export default function Creator() {
                 </Link>
               </div>
             </div>
-            <div className="px-16 mt-[-3rem]">
+            <div className="px-16 mt-[-3rem] mb-10">
               <h1 className="font-bold text-2xl">{name}</h1>
               <p className="font-semibold text-gray-400 text-md">{address}</p>
               <p className="font-semibold text-gray-400 text-sm">
@@ -278,19 +257,37 @@ export default function Creator() {
                 null
               )
               : (
-                <>
-                  <div className="border-t border-b border-gray-400 w-full p-6">
-                    <h1 className="font-semibold text-gray-800 text-xl mb-4">
-                      Subscription
-                    </h1>
-                    <div className="flex justify-evenly ">
-                      <ConnectWallet />
-                      <Button onClick={join}>Join</Button>
-                    </div>
+                <div className="border-t border-b border-gray-400 w-full p-6">
+                  <h1 className="font-semibold text-gray-800 text-xl mb-4">
+                    Subscription
+                  </h1>
+                  <div className="flex justify-evenly">
+                    <ConnectWallet />
+                    <Button
+                      onClick={join}
+                      className="w-full flex justify-between"
+                    >
+                      <span>SUBSCRIBE</span>
+                      <span>FOR FREE</span>
+                    </Button>
                   </div>
-                </>
+                </div>
               )}
-            <LatestFeeds onlyCreator userId={creatorUser._id} />
+            {sameCreator
+              ? (
+                <LatestFeeds
+                  onlyCreator
+                  userId={creatorUser._id}
+                  isMember={true}
+                />
+              )
+              : (
+                <LatestFeeds
+                  onlyCreator
+                  userId={creatorUser._id}
+                  isMember={member}
+                />
+              )}
           </div>
         </div>
       </div>

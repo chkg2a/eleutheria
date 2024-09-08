@@ -28,7 +28,7 @@ export default function NewPost() {
             Authorization: `Bearer ${token}`,
           },
           timeout: 30000,
-        }
+        },
       );
       console.log(res);
     } catch (error) {
@@ -66,7 +66,7 @@ export default function NewPost() {
       />
       <div className="flex p-4">
         <div className="flex-grow flex text-2xl gap-2">
-          <div>
+          <div className="flex gap-4">
             <PopUp
               trigger={<CiImageOn />}
               content={
@@ -77,14 +77,13 @@ export default function NewPost() {
                 />
               }
             />
-          </div>
-          <div className="flex items-center">
-            {/* Fixed Checkbox onChange */}
-            <Checkbox
-              checked={isPublic}
-              onCheckedChange={(checked) => setIsPublic(!!checked)} // Update isPublic on change
-            />
-            <span className="ml-2">Public</span>
+            <div className="flex items-center">
+              <Checkbox
+                checked={isPublic}
+                onCheckedChange={(checked) => setIsPublic(!!checked)} // Update isPublic on change
+              />
+              <span className="ml-2 text-sm text-gray-500">Public</span>
+            </div>
           </div>
         </div>
         <div className="">

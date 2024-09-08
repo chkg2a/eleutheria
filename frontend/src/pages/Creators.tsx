@@ -9,7 +9,12 @@ import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
 import LatestFeeds from "@/components/LatestFeeds";
 import { Button } from "@/components/ui/button";
+
 import Abi from "./ABI.json";
+
+import { useToast } from "@/hooks/use-toast"
+
+
 interface Web3State {
   address: string;
   provider: string;
@@ -31,6 +36,7 @@ interface User {
 }
 
 export default function Creator() {
+  const { toast } = useToast()
   const { id } = useParams(); // Extract the id parameter from the route
   const { user, contract, member,setAddress,setProvider,setSigner,setContract,creatorAddress,setMember } = useWeb3State((state: Web3State) => ({
     user: state.user,
@@ -53,7 +59,10 @@ export default function Creator() {
         setcreatorAddress(res.data.user.address);
         setCreator(res.data);
       } catch (error) {
-        console.error("Error fetching creator:", error);
+        toast({
+          title: "Error fetching creator:",
+          description: error
+        });
       }
     };
     handleCreator();
@@ -113,7 +122,10 @@ export default function Creator() {
         },
       );
     } catch (error) {
-      console.error("Error uploading banner image:", error);
+        toast({
+          title: "Error fetching creator:",
+          description: error
+        });
     }
   };
 
@@ -134,7 +146,10 @@ export default function Creator() {
         },
       );
     } catch (error) {
-      console.error("Error uploading profile image:", error);
+        toast({
+          title: "Error fetching creator:",
+          description: error
+        });
     }
   };
 
@@ -171,7 +186,10 @@ export default function Creator() {
       };
 
       reader.onerror = (error) => {
-        console.log("Error: ", error);
+        toast({
+          title: "Error fetching creator:",
+          description: error
+        });
       };
     }
   };
@@ -180,10 +198,15 @@ export default function Creator() {
     try {
       const tx = await contract.join(creatorAddress);
       await tx.wait();
-      alert("Joined successfully");
+        toast({
+          title: "Joined",
+          description: "Successfully Joined"
+        });
     } catch (error) {
-      console.error("Error joining:", error);
-      alert("Failed to join");
+        toast({
+          title: "Error Joining",
+          description: error
+        });
     }
   };
 
@@ -293,20 +316,19 @@ export default function Creator() {
             </div>
 
             {!sameCreator && (
-              <div className="border-t border-b border-gray-400 w-full p-6">
+              <div className="flex flex-col border-t border-b border-gray-400 w-full p-6 gap-4">
                 <h1 className="font-semibold text-gray-800 text-xl mb-4">
                   Subscription
                 </h1>
-                <div className="flex justify-evenly">
-                <ConnectWallet/>
-                  <Button
-                    onClick={join}
-                    className="w-full flex justify-between"
-                  >
-                    <span>SUBSCRIBE</span>
-                    <span>FOR FREE</span>
-                  </Button>
-                </div>
+                <ConnectWallet />
+                <Button
+                  onClick={join}
+                  className="w-full flex justify-between"
+                >
+                  <span>SUBSCRIBE</span>
+                  <span>FOR FREE</span>
+                </Button>
+
               </div>
             )}
 

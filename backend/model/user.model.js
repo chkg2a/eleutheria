@@ -1,35 +1,46 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const userSchema = new Schema({
-    email:{
-        type:String,
-        required:true
+const postSchema = new Schema({
+    title: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    description: {
+        type: String,
+        required: true
     },
-    name:{
-        type:String,
-        required:true
-    },
-    address:{
-        type:String,
-        default:""
-        
-    },
-    profilePic:{
-        type:String,
-        default:""
-    },
-    posts:[{
-        type:Schema.Types.ObjectId,
-        ref:"Post"
-    }]
-},{
-    timestamps:true
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
-const User = mongoose.model("User",userSchema);
+const userSchema = new Schema({
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        default: ""
+    },
+    profilePic: {
+        type: String,
+        default: ""
+    },
+    posts: [postSchema] // Array of post objects
+}, {
+    timestamps: true
+});
+
+const User = mongoose.model("User", userSchema);
 export default User;

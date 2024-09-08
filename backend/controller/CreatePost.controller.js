@@ -11,7 +11,7 @@ const CreatePost=async(req,res)=>{
     console.log(title,description);
     const post=await Post.create({title,description,User:user._id});
     post.save();
-    user.posts.push(post._id);
+    user.posts.push(post);
     user.save();
     res.status(200).json({message:"post created successfully",post});
     } catch (error) {

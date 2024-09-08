@@ -6,10 +6,12 @@ const StateData=(set)=>{
         provider:null,
         signer:null,
         contract:null,
+        creatorAddress:"",
         setAddress:(account)=>set({address:account}),
         setProvider:(provider)=>set({provider:provider}),
         setSigner:(signer)=>set({signer:signer}),
         setContract:(contract)=>set({contract:contract}),
+        setCreatorAddress:(creatorAddress)=>set({creatorAddress:creatorAddress}),
     });
 }
 

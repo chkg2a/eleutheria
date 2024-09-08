@@ -8,23 +8,31 @@ import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
+import connectWallet from "../utils/connectWallet";
+import Abi from "./ABI.json";
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState(null);
-  const {provider,signer,contract}=useWeb3State((state)=>state);
+ const [creatorAddress,setcreatorAddress]=useState("");
+  const {contract,setCreatorAddress}=useWeb3State((state)=>state);
+ 
+
   useEffect(() => {
-    const handleCreator = async () => {
+      const handleCreator = async () => {
       try {
         const url = `http://localhost:3000/user/post/${id}`;
 
         const res = await axios.get(url);
+        setCreatorAddress(res.data.user.address);
+        setcreatorAddress(res.data.user.address);
         setCreator(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     handleCreator();
-  }, [id]); // Added `id` to the dependency array to avoid warnings
+ 
+  }, [id,]); // Added `id` to the dependency array to avoid warnings
 
   if (!creator) {
     return (
@@ -34,10 +42,11 @@ export default function Creator() {
     );
   }
   const join=async()=>{
-    const tx=await contract.join("0x71f6237984e4C2d9030A71f57BFD3BA146180cA4",{value:ethers.parseEther("0.0001")});
-    tx.wait();
+    const tx=await contract.join(creatorAddress,{value:ethers.parseEther("0.0001")});
+   await tx.wait();  
     alert("tx");
   }
+  
 
   const user = creator?.user || {}; // Safe access to nested properties
   const { name = "Unknown", address = "Unknown Address", profilePic = "defaultAvatar.png"} = user; // Default values for user data
@@ -104,10 +113,11 @@ export default function Creator() {
               <h1 className="font-semibold text-gray-800 text-xl mb-4">
                 Subscription
               </h1>
-              <ConnectWallet/>
+              
             </div>
-
-          <button onClick={join}>join</button>
+        <ConnectWallet/>
+        <button onClick={join}>join</button>
+         
           </div>
         </div>
       </div>

@@ -11,6 +11,9 @@ const UpdateAddress=async(req,res)=>{
     if(!user){
         return res.status(401).send({ message: "User not found" });
     }
+    if(user.address!==""){
+      return res.status(200).send({ message: "Address already exists" });
+    }
     user.address=address;
     user.save();
     res.status(200).send({message:"address updated successfully",user});

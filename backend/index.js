@@ -10,6 +10,7 @@ import GetPostrouter from './route/GetPost.route.js';
 import GetPostrouterUser from './route/GetUserPost.route.js';
 import GetUserrouter from './route/GetUser.route.js';
 import UpdateAddressrouter from './route/UpdateAddress.route.js';
+import BannerPicrouter from './route/BannerPic.route.js';
 const app=express();
 const PORT=process.env.PORT || 3001;
 app.use(express.json({limit:"50mb"}));
@@ -22,12 +23,13 @@ app.use(cors({
 app.use("/api",SignInrouter);
 app.use("/api",SignUprouter);
 app.use("/post",CreatePostrouter);
-app.use("/image",imageUpdaterrouter);
+app.use("/user",imageUpdaterrouter);
 app.use("/home",GetPostrouter);
 //app.use("profile",GetProfile);
 app.use("/user",GetPostrouterUser);
 app.use("/data",GetUserrouter);
 app.use("/update",UpdateAddressrouter);
+app.use("/user",BannerPicrouter);
 
 
 const startServer=async()=>{

@@ -1,7 +1,7 @@
 import Feed from "../components/Feed";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import useWeb3State from "@/store/Web3State";
 interface Post {
   _id: string;
   title: string;
@@ -21,7 +21,8 @@ interface User {
 
 export default function LatestFeeds() {
   const [users, setUsers] = useState<User[]>([]);
-
+  const {user}=useWeb3State((state)=>state);
+  console.log(user)
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -1,16 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
+import useWeb3State from "../store/Web3State";
 export default function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const {setUser}= useWeb3State((state)=>state);
+  console.log(setUser);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const url = `http://localhost:3000/api/signin`;
     const res = await axios.post(url, { email, password });
     localStorage.setItem("token", res.data.token);
+    setUser(res.data.user);
     if(res.status === 200){
       navigate('/')
     }

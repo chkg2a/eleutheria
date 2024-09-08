@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const postSchema = new Schema({
+    public:{
+        type:Boolean,
+        default:false
+    },
     title: {
         type: String,
         required: true
@@ -10,6 +14,11 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        default:""
+    },
+
     createdAt: {
         type: Date,
         default: Date.now
@@ -34,6 +43,10 @@ const userSchema = new Schema({
         default: ""
     },
     profilePic: {
+        type: String,
+        default: ""
+    },
+    profileBanner:{
         type: String,
         default: ""
     },

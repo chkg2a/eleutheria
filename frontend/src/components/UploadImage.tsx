@@ -30,7 +30,7 @@ const UploadImage = () => {
             console.log('No image to upload');
             return;
         }
-
+        
         try {
             const res = await axios.post(
                 url,

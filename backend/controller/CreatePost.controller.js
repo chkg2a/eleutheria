@@ -11,7 +11,7 @@ const CreatePost=async(req,res)=>{
     const decode=jwt.verify(token,process.env.JWT_SECRET_KEY);
     const user=await User.findOne({_id:decode.userId});
     console.log(title,description);
-    const post=await Post.create({title,description,image:base64,User:user._id});
+    const post=await Post.create({description,image:base64,User:user._id});
     post.save();
     
     user.posts.push(post);

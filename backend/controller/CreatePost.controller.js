@@ -3,7 +3,7 @@ import User from "../model/user.model.js";
 import jwt from "jsonwebtoken";
 const CreatePost=async(req,res)=>{
     try {
-    const {title,description,base64}=req.body;
+    const {title,description,base64,isPublic}=req.body;
     console.log(base64);
     
     const authHeader = req.headers['authorization'];
@@ -11,7 +11,7 @@ const CreatePost=async(req,res)=>{
     const decode=jwt.verify(token,process.env.JWT_SECRET_KEY);
     const user=await User.findOne({_id:decode.userId});
     console.log(title,description);
-    const post=await Post.create({description,image:base64,User:user._id});
+    const post=await Post.create({public:isPublic,description,image:base64,User:user._id});
     post.save();
     
     user.posts.push(post);

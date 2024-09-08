@@ -14,7 +14,7 @@ interface Web3State {
 
 const ConnectWallet = () => {
     const navigate=useNavigate();
-    const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state: Web3State)=>state);
+    const {setAddress,setProvider,setSigner,setContract,creatorAddress,setMember}=useWeb3State((state: Web3State)=>state);
     console.log(setAddress,setProvider,setSigner);
     const handleConnect=async()=>{
         try {
@@ -38,6 +38,7 @@ const ConnectWallet = () => {
             setContract(contract);
             console.log(selectedAccount,provider,signer,contract);
             const member=await contract.members(creatorAddress,selectedAccount);
+            setMember(member);
             console.log(member);
             
 

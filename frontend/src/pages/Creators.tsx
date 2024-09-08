@@ -23,7 +23,8 @@ export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState<Creator>();
   const [creatorAddress, setcreatorAddress] = useState("");
-  const { contract, setCreatorAddress } = useWeb3State((state: Web3State) => state);
+  const { contract, setCreatorAddress,member } = useWeb3State((state: Web3State) => state);
+  console.log(member);
 
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
   const [profilePic, setProfilePic] = useState<string>("defaultAvatar.png"); // For profile picture

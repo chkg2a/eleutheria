@@ -4,9 +4,17 @@ import useWeb3State from "../store/Web3State";
 import { useNavigate } from 'react-router-dom';
 import Abi from "./ABI.json";
 import axios from 'axios';
+
+interface Web3State {
+  address : string,
+  provider : string,
+  signer : any,
+  contract : any
+}
+
 const ConnectWallet = () => {
     const navigate=useNavigate();
-    const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state)=>state);
+    const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state: Web3State)=>state);
     console.log(setAddress,setProvider,setSigner);
     const handleConnect=async()=>{
         try {

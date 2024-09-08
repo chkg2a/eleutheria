@@ -11,7 +11,7 @@ export default function NewPost() {
       <textarea
         placeholder="Compose a new Post"
         className="p-4 w-full border-gray-300 focus:border-blue-500 outline-none resize-none"
-        rows="3"
+        rows={3}
       />
       <div className="flex p-4">
         <div className="flex-grow flex text-2xl gap-2">

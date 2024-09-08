@@ -8,8 +8,6 @@ import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
 import { ethers } from "ethers";
-import connectWallet from "../utils/connectWallet";
-import Abi from "./ABI.json";
 
 interface Web3State {
   address: string;

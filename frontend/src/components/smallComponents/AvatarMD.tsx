@@ -1,6 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-export default function AvatarMD({ className, src, NAME }) {
+interface AvatarMDProps{
+  className : string,
+  src : string,
+  NAME : string,
+}
+
+export default function AvatarMD({ className, src, NAME } : AvatarMDProps) {
   return (
     <Avatar className={className}>
       <AvatarImage

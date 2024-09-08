@@ -38,10 +38,12 @@ const ConnectWallet = () => {
             setContract(contract);
             const member=await contract.members(creatorAddress,selectedAccount);
 
+
+
+
             setMember(member);
             console.log(member);
             
-
 
         } catch (error) {
             console.log(error);

@@ -8,6 +8,7 @@ interface Post {
   description: string;
   image: string;
   createdAt: string;
+  public: boolean; // Add a public field to the Post interface
 }
 
 interface User {
@@ -22,9 +23,10 @@ interface User {
 interface LatestFeedsProps {
   onlyCreator: boolean;
   userId?: string; // Fix userId type to be string
+  isMember?: boolean; // Add isMember prop to handle post visibility
 }
 
-export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
+export default function LatestFeeds({ onlyCreator, userId, isMember = false }: LatestFeedsProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [user, setUser] = useState<User | null>(null); // Handle user as nullable
 
@@ -75,11 +77,16 @@ export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
     );
   }
 
+  // Filter posts based on `isMember`
+  const filterPosts = (posts: Post[]) => {
+    return isMember ? posts : posts.filter(post => post.public);
+  };
+
   if (onlyCreator && user) {
     return (
       <div className="w-full flex flex-col">
         {user.posts && user.posts.length > 0
-          ? user.posts.map((post) => (
+          ? filterPosts(user.posts).map((post) => (
               <Feed
                 key={post._id}
                 address={user.address}
@@ -91,7 +98,7 @@ export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
                 image={`${post.image}`}
               />
             ))
-          : <p>No posts available</p>}
+          : null}
       </div>
     );
   }
@@ -101,7 +108,7 @@ export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
       {users.map((user) => (
         <div key={user._id}>
           {user.posts && user.posts.length > 0
-            ? user.posts.map((post) => (
+            ? filterPosts(user.posts).map((post) => (
                 <Feed
                   key={post._id}
                   address={user.address}
@@ -113,7 +120,7 @@ export default function LatestFeeds({ onlyCreator, userId }: LatestFeedsProps) {
                   image={`${post.image}`}
                 />
               ))
-            : <p>No posts available</p>}
+            : null}
         </div>
       ))}
     </div>

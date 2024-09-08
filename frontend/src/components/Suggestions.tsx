@@ -1,4 +1,5 @@
 import { Input } from "../components/ui/input";
+import { Link } from "react-router-dom"
 import { IoPricetagOutline } from "react-icons/io5";
 import { FiRefreshCcw } from "react-icons/fi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -35,7 +36,7 @@ export default function Suggestions() {
   // Slice the array to get only the first 3 users
   const limitedUsers = users.slice(0, 3);
 
-  console.log(limitedUsers)
+  console.log(limitedUsers);
   return (
     <div className="fixed min-w-[368px] max-h-[128px]">
       <div>
@@ -57,18 +58,20 @@ export default function Suggestions() {
           </span>
         </div>
         <div>
-          {limitedUsers.length > 0 ? (
-            limitedUsers.map((user) => (
-              <CardSuggest
-                key={user._id}
-                profilePic={user.profilePic}  // Use data from user
-                profileBanner={user.profileBanner}
-                name={user.name} // Use data from user
-              />
-            ))
-          ) : (
-            <p>Not available</p>
-          )}
+          {limitedUsers.length > 0
+            ? (
+              limitedUsers.map((user) => (
+                <Link key={user._id} to={`/creator/${user._id}`}>
+                  <CardSuggest
+                    key={user._id}
+                    profilePic={user.profilePic} // Use data from user
+                    profileBanner={user.profileBanner}
+                    name={user.name} // Use data from user
+                  />
+                </Link>
+              ))
+            )
+            : <p className="loading-text"></p>}
         </div>
       </div>
     </div>

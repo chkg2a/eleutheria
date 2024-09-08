@@ -3,6 +3,7 @@ import useWeb3State from "../store/Web3State";
 import { useNavigate } from 'react-router-dom';
 import Abi from "./ABI.json";
 import axios from 'axios';
+import { Button } from "@/components/ui/button"
 
 interface Web3State {
   address : string,
@@ -51,7 +52,7 @@ const ConnectWallet = () => {
     }
   return (
     <div>
-      <button onClick={handleConnect}>Connect</button>
+      <Button className="w-full mt-2" onClick={handleConnect}>Connect</Button>
     </div>
   )
 }

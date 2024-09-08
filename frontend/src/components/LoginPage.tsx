@@ -1,10 +1,11 @@
-
+import {useToast} from "@/hooks/use-toast"
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
 
 export default function SignUp() {
+  const {toast} = useToast()
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -20,11 +21,17 @@ export default function SignUp() {
       const res = await axios.post(url, { email, password });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
+
       if (res.status === 200) {
+        toast({
+          title: "Succesfull",
+          description: "Succesfully Logged IN"
+        });
         navigate('/');
       }
     } catch (error) {
       console.error("Login failed:", error);
+
       // Optionally handle the error state here
     } finally {
       setLoading(false); // Set loading to false when the request is done

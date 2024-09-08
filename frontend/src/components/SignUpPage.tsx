@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast"
 
 export default function SignUp() {
+  const {toast} = useToast()
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -18,6 +20,10 @@ export default function SignUp() {
       const res = await axios.post(url, { email, password, name });
       console.log(res);
       if (res.status === 200) {
+        toast({
+          title: "Succesfull",
+          description: "Succesfully created your account"
+        });
         navigate('/login');
       }
     } catch (error) {

@@ -6,7 +6,7 @@ import Abi from "./ABI.json";
 import axios from 'axios';
 const ConnectWallet = () => {
     const navigate=useNavigate();
-    const {setAddress,setProvider,setSigner,setContract}=useWeb3State((state)=>state);
+    const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state)=>state);
     console.log(setAddress,setProvider,setSigner);
     const handleConnect=async()=>{
         try {
@@ -29,6 +29,8 @@ const ConnectWallet = () => {
             const contract= new ethers.Contract(contractAddress,Abi,signer);
             setContract(contract);
             console.log(selectedAccount,provider,signer,contract);
+            const member=await contract.members(creatorAddress,selectedAccount);
+            console.log(member);
             
 
         } catch (error) {

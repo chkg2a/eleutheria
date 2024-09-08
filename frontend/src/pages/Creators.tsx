@@ -7,6 +7,9 @@ import AvatarMD from "@/components/smallComponents/AvatarMD";
 import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
+import { ethers } from "ethers";
+import connectWallet from "../utils/connectWallet";
+import Abi from "./ABI.json";
 
 interface Web3State {
   address: string;
@@ -22,22 +25,25 @@ interface Creator {
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState<Creator>();
-  const { provider, signer, contract } = useWeb3State((state: Web3State) =>
-    state
-  );
+  const [creatorAddress,setcreatorAddress]=useState("");
+  const {contract,setCreatorAddress}=useWeb3State((state : Web3State)=>state);
+ 
   useEffect(() => {
-    const handleCreator = async () => {
+      const handleCreator = async () => {
       try {
         const url = `http://localhost:3000/user/post/${id}`;
 
         const res = await axios.get(url);
+        setCreatorAddress(res.data.user.address);
+        setcreatorAddress(res.data.user.address);
         setCreator(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     handleCreator();
-  }, [id]); // Added `id` to the dependency array to avoid warnings
+ 
+  }, [id,]); // Added `id` to the dependency array to avoid warnings
 
   if (!creator) {
     return (
@@ -46,15 +52,12 @@ export default function Creator() {
       </div>
     );
   }
-  const join = async () => {
-    const tx = await contract.join(
-      "0x71f6237984e4C2d9030A71f57BFD3BA146180cA4",
-    );
-    tx.wait();
+  const join=async()=>{
+    const tx=await contract.join(creatorAddress,{value:ethers.parseEther("0.0001")});
+   await tx.wait();  
     alert("tx");
-  };
-
-
+  }
+  
   const user = creator?.user || {};
   const {
     name = "Unknown",
@@ -126,7 +129,6 @@ export default function Creator() {
               </h1>
               <ConnectWallet />
             </div>
-
             <button onClick={join}>join</button>
           </div>
         </div>

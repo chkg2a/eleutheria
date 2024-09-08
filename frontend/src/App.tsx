@@ -9,7 +9,7 @@ import NavBar from "./components/NavBar";
 import CreatePostTest from "./components/CreatePostTest";
 import TestGetPost from "./components/TestGetPost";
 import ConnectWallet from "./components/ConnectWallet";
-
+import TestToken from "./components/TestToken";
 function App() {
   return (
     <>
@@ -50,6 +50,7 @@ function MainLayout() {
               <Route path="/createpost" element={<CreatePostTest />} />
               <Route path="/getpost" element={<TestGetPost />} />
               <Route path="/connectwallet" element={<ConnectWallet />} />
+              <Route path="/testtoken" element={<TestToken />} />
             </Routes>
           </div>
           <div className="col-span-4 md:col-span-3 hidden md:block w-full">

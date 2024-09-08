@@ -196,7 +196,7 @@ export default function Creator() {
 
   const join = async () => {
     try {
-      const tx = await contract.join(creatorAddress);
+      const tx = await contract.join(creatoraddress,{value:ethers.parseEther("0.0001")});
       await tx.wait();
         toast({
           title: "Joined",
@@ -205,7 +205,6 @@ export default function Creator() {
     } catch (error) {
         toast({
           title: "Error Joining",
-          description: error
         });
     }
   };

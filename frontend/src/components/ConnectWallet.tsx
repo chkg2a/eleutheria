@@ -38,9 +38,6 @@ const ConnectWallet = () => {
             const contract= new ethers.Contract(contractAddress,Abi,signer);
             setContract(contract);
             console.log(contract);
-            const member=await contract.members(creatorAddress,selectedAccount);
-            setMember(member);
-            
 
         } catch (error) {
             console.log(error);

@@ -1,11 +1,15 @@
 import PopUp from "../components/smallComponents/PopUp";
+import { useNavigate } from "react-router-dom"
 import { CiImageOn } from "react-icons/ci";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
+import {useToast} from "@/hooks/use-toast"
 
 export default function NewPost() {
+  const {toast} = useToast()
+  const navigate = useNavigate()
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false); // Handles post visibility
   const [img, setImg] = useState<string>("");
@@ -27,9 +31,16 @@ export default function NewPost() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          timeout: 30000,
+          timeout: 5000,
         },
       );
+      if(res.status === 200){
+        toast({
+          title: "Succesfull",
+          description: "Succesfully created a post"
+        });
+        navigate('/');
+      }
       console.log(res);
     } catch (error) {
       console.error("Error creating post:", error);

@@ -3,6 +3,5 @@ import ImageUpdate from "../controller/ImageUpdate.controller.js";
 const imageUpdaterrouter = express.Router();
 
 
-imageUpdaterrouter.post("/imageupdate", ImageUpdate);
+imageUpdaterrouter.post("/update/imageupdate", ImageUpdate);
 export default imageUpdaterrouter;
-

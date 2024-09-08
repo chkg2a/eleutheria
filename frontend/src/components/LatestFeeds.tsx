@@ -55,7 +55,7 @@ export default function LatestFeeds() {
                 <Feed
                   key={post._id}
                   address={user.address}
-                  link={`/creators/${user.address}`}
+                  link={`/creator/${user._id}`}
                   avatar={`/images/${user.profilePic}`}
                   fullName={user.name}
                   createdAt={post.createdAt}

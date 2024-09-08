@@ -7,6 +7,7 @@ import AvatarMD from "@/components/smallComponents/AvatarMD";
 import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
+import { ethers } from "ethers";
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
   const [creator, setCreator] = useState(null);
@@ -33,7 +34,7 @@ export default function Creator() {
     );
   }
   const join=async()=>{
-    const tx=await contract.join("0x71f6237984e4C2d9030A71f57BFD3BA146180cA4");
+    const tx=await contract.join("0x71f6237984e4C2d9030A71f57BFD3BA146180cA4",{value:ethers.parseEther("0.0001")});
     tx.wait();
     alert("tx");
   }

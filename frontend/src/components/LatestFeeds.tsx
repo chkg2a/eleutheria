@@ -11,7 +11,7 @@ export default function LatestFeeds() {
         const url = "http://localhost:3000/home/getpost";
         const res = await axios.get(url);
         setPosts(res.data.post); // Correctly setting the posts
-        console.log(res)
+        console.log(res);
       } catch (error) {
         console.log(error);
       }

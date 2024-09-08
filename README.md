@@ -9,7 +9,7 @@ Payments made via credit card / bank can be regulated or can be easily censored 
 Our platform allows users to pay via crypto currency using blockchain technology. Ultimately, you decide where the money goes, and no one can stop you from making such purchases unless illegal materials are used. Anyone on the platform can upload an image, video without any censorship and we allow creators to get paid for their works and contents via cryptocurrency.
 
 ## Try it out
-[link]()
+[link]("https://eleutheria-nu.vercel.app/")
 
 ## How the Project Was Made
 Frontend -

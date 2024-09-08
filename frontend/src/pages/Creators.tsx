@@ -1,5 +1,4 @@
-import PopUp from "../components/smallComponents/PopUp";
-import { useEffect, useState } from "react";
+import PopUp from "../components/smallComponents/PopUp"; import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CiShare1, CiStar } from "react-icons/ci";
 import AvatarMD from "@/components/smallComponents/AvatarMD";
@@ -35,15 +34,9 @@ export default function Creator() {
   const [sameCreator, setSameCreator] = useState(false);
   const [creator, setCreator] = useState<Creator>();
   const [creatorAddress, setcreatorAddress] = useState("");
-<<<<<<< HEAD
-  const { contract, setCreatorAddress } = useWeb3State((state: Web3State) =>
-    state
-  );
-=======
   const { contract, setCreatorAddress,member } = useWeb3State((state: Web3State) => state);
   console.log(member);
 
->>>>>>> 804384dff113530975c5221fe98977673f43c426
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
   const [profilePic, setProfilePic] = useState<string>(""); // For profile picture
 

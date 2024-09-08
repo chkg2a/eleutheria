@@ -1,15 +1,15 @@
 import PopUp from "../components/smallComponents/PopUp";
 import { CiImageOn } from "react-icons/ci";
-import { BiPoll } from "react-icons/bi";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 export default function NewPost() {
   const [description, setDescription] = useState("");
+  const [isPublic, setIsPublic] = useState(false); // Handles post visibility
   const [img, setImg] = useState<string>("");
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const base64 = img;
@@ -20,16 +20,22 @@ export default function NewPost() {
     const url = `http://localhost:3000/post/createpost`;
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.post(url, { description, base64 }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        timeout:30000,
-      });
+      const res = await axios.post(
+        url,
+        { description, base64, isPublic },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          timeout: 30000,
+        }
+      );
       console.log(res);
     } catch (error) {
+      console.error("Error creating post:", error);
     }
   };
+
   const changetoBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -72,14 +78,17 @@ export default function NewPost() {
               }
             />
           </div>
-          <div>
-            <Checkbox />
+          <div className="flex items-center">
+            {/* Fixed Checkbox onChange */}
+            <Checkbox
+              checked={isPublic}
+              onCheckedChange={(checked) => setIsPublic(!!checked)} // Update isPublic on change
+            />
+            <span className="ml-2">Public</span>
           </div>
         </div>
         <div className="">
-          <Button type="submit">
-            New Post
-          </Button>
+          <Button type="submit">New Post</Button>
         </div>
       </div>
     </form>

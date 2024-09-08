@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <HomeBox />
       <ComposeNewPost />
-      <LatestFeeds />
+      <LatestFeeds onlyCreator={false}/>
     </>
   );
 }

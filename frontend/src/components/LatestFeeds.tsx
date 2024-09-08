@@ -1,3 +1,4 @@
+
 import Feed from "../components/Feed";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,18 +9,18 @@ export default function LatestFeeds() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "http://localhost:3000/home/getpost";
+        const url="http://localhost:3000/home/getpost";
         const res = await axios.get(url);
         setPosts(res.data.post); // Correctly setting the posts
         console.log(res);
       } catch (error) {
-        console.log(error);
+        console.log(error); 
       }
     };
 
     fetchData();
   }, []);
-
+ 
   const creator = {
     address: "5123k1j23",
     profilePic: "logo.png",

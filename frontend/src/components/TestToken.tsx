@@ -16,9 +16,10 @@ const TestToken = () => {
                 console.log("token removed");
                 navigate('/login');
             }
-            if(!token){
-                navigate('/login');
-            }
+           
+        }
+        else{
+            navigate('/login');
         }
     };
 

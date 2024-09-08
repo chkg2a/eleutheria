@@ -8,6 +8,7 @@ const StateData = (set) => {
     contract: null,
     creatorAddress: "",
     user: null,
+    member:false,
     setAddress: (account) => set({ address: account }),
     setProvider: (provider) => set({ provider: provider }),
     setSigner: (signer) => set({ signer: signer }),
@@ -15,6 +16,7 @@ const StateData = (set) => {
     setCreatorAddress: (creatorAddress) =>
       set({ creatorAddress: creatorAddress }),
     setUser: (user) => set({ user: user }),
+    setMember: (member) => set({ member: member }),
   });
 };
 

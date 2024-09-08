@@ -35,9 +35,15 @@ export default function Creator() {
   const [sameCreator, setSameCreator] = useState(false);
   const [creator, setCreator] = useState<Creator>();
   const [creatorAddress, setcreatorAddress] = useState("");
+<<<<<<< HEAD
   const { contract, setCreatorAddress } = useWeb3State((state: Web3State) =>
     state
   );
+=======
+  const { contract, setCreatorAddress,member } = useWeb3State((state: Web3State) => state);
+  console.log(member);
+
+>>>>>>> 804384dff113530975c5221fe98977673f43c426
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
   const [profilePic, setProfilePic] = useState<string>(""); // For profile picture
 
@@ -158,10 +164,14 @@ export default function Creator() {
   }
 
   const join = async () => {
+  //  const url="http://localhost:3000/internal/getuserid";
+    
     const tx = await contract.join(creatorAddress, {
       value: ethers.parseEther("0.0001"),
     });
     await tx.wait();
+   // const res=await axios.post(url,{id});
+   // console.log(res);
     alert("tx");
   };
 

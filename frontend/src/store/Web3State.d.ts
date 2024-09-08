@@ -8,6 +8,7 @@ interface Web3State {
   contract: any;        // Replace `any` with the type of your contract
   creatorAddress: string;
   user:Object;
+  member:boolean;
   
   // Actions to update the state
   setAddress: (account: string) => void;
@@ -16,6 +17,8 @@ interface Web3State {
   setContract: (contract: any) => void;   // Adjust type based on contract type (if known)
   setCreatorAddress: (creatorAddress: string) => void;
   setUser: (user:Object) => void;
+
+  setMember: (member:boolean) => void;
 }
 
 // Now define the state and actions
@@ -33,6 +36,7 @@ const useWeb3State = create<Web3State>((set) => ({
   setContract: (contract) => set({ contract: contract }),
   setCreatorAddress: (creatorAddress) => set({ creatorAddress: creatorAddress }),
   setUser: (account) => set({ address: account }),
+  
 }));
 
 export default useWeb3State;

@@ -13,7 +13,12 @@ interface Web3State {
 
 const ConnectWallet = () => {
     const navigate=useNavigate();
+<<<<<<< HEAD
     const {setAddress,setProvider,setSigner,setContract,creatorAddress}=useWeb3State((state: Web3State)=>state);
+=======
+    const {setAddress,setProvider,setSigner,setContract,creatorAddress,setMember}=useWeb3State((state: Web3State)=>state);
+    console.log(setAddress,setProvider,setSigner);
+>>>>>>> 804384dff113530975c5221fe98977673f43c426
     const handleConnect=async()=>{
         try {
             const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
@@ -34,6 +39,13 @@ const ConnectWallet = () => {
             const contract= new ethers.Contract(contractAddress,Abi,signer);
             setContract(contract);
             const member=await contract.members(creatorAddress,selectedAccount);
+<<<<<<< HEAD
+=======
+            setMember(member);
+            console.log(member);
+            
+
+>>>>>>> 804384dff113530975c5221fe98977673f43c426
         } catch (error) {
             console.log(error);
         }

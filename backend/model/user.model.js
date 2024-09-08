@@ -1,24 +1,30 @@
 import mongoose from "mongoose";
-import { Schema } from "mongoose";
+const { Schema } = mongoose;
 
 const postSchema = new Schema({
-    public:{
-        type:Boolean,
-        default:false
+    public: {
+        type: Boolean,
+        default: false
     },
-    
     description: {
         type: String,
         required: true
     },
     image: {
         type: String,
-        default:""
+        default: ""
     },
-
     createdAt: {
         type: Date,
         default: Date.now
+    }
+});
+
+const subscriptionSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",  // Reference to the User model
+        required: true
     }
 });
 
@@ -43,11 +49,12 @@ const userSchema = new Schema({
         type: String,
         default: ""
     },
-    profileBanner:{
+    profileBanner: {
         type: String,
         default: ""
     },
-    posts: [postSchema] // Array of post objects
+    posts: [postSchema],  // Array of post objects
+    subscriptions: [subscriptionSchema]  // Array of user references in subscriptions
 }, {
     timestamps: true
 });

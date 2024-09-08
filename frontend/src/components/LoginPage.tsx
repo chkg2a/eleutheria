@@ -7,7 +7,6 @@ export default function SignUp() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const {setUser}= useWeb3State((state)=>state);
-  console.log(setUser);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const url = `http://localhost:3000/api/signin`;

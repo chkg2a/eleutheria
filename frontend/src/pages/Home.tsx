@@ -12,13 +12,10 @@ export default function Home() {
     const isTokenExpired = () => {
       if (token) {
         const decodedToken = jwtDecode(token); // Call jwt_decode to decode the token
-        console.log(decodedToken.exp); // Add some logic here to check token expiration;
         const currentTime = Date.now() / 1000;
         const tokenTime = decodedToken.exp;
-        console.log(tokenTime);
         if (tokenTime < currentTime) {
           localStorage.removeItem("token");
-          console.log("token removed");
           navigate("/login");
         }
       } else {

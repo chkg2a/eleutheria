@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import AvatarMD from "../components/smallComponents/AvatarMD";
-import { formatDistanceToNow } from 'date-fns'; // Import date-fns for easy date formatting
+import { formatDistanceToNow } from "date-fns"; // Import date-fns for easy date formatting
 
 interface FeedProps {
   address: string;
@@ -26,6 +26,7 @@ export default function Feed(
 
   return (
     <div key={address}>
+            <div className="h-[1px] w-full border-t my-8"/>
       <div className="p-4">
         <div className="flex">
           <AvatarMD className="size-16" src={avatar} NAME={initials} />
@@ -41,12 +42,16 @@ export default function Feed(
           <p className="py-2 text-sm md:text-lg">{paragraph}</p>
         </div>
       </div>
-      <img
-        src={image}
-        alt="test"
-        height={1080}
-        width={1920}
-      />
+      {image
+        ? (
+          <img
+            src={image}
+            alt="test"
+            height={1080}
+            width={1920}
+          />
+        )
+        : (null)}
     </div>
   );
 }

@@ -22,7 +22,6 @@ const connectWallet=async()=>{
               Authorization: `Bearer ${token}`, 
           }
       });
-        console.log(res.data.address);
         setAddress(selectedAccount);
         const provider=new ethers.BrowserProvider(window.ethereum);
         const signer=await provider.getSigner();
@@ -31,7 +30,6 @@ const connectWallet=async()=>{
         const contractAddress="0x8F88Ad8D58D4519d0b1915C72AC9c7De46c936Fe";
         const contract= new ethers.Contract(contractAddress,Abi,signer);
         setContract(contract);
-        console.log(selectedAccount,provider,signer,contract);
         
 
     } catch (error) {

@@ -24,7 +24,6 @@ export default function Suggestions() {
         const url = "http://localhost:3000/home/getpost";
         const res = await axios.get(url);
         setUsers(res.data.user);
-        console.log(res.data.user);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

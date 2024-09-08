@@ -6,18 +6,41 @@ import { CgProfile } from "react-icons/cg";
 import { CiCircleMore } from "react-icons/ci";
 import { Button } from "../components/ui/button";
 import AvatarMD from "../components/smallComponents/AvatarMD";
+import useWeb3State from "../store/Web3State";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+interface User {
+  address: string;
+  _id: string;
+  profilePic?: string;
+  link?: string;
+}
 
 export default function NavBar() {
-  const user = {
-    link: `/creator/66dd242a378281dc9dffb54a`,
-    profilePic: "pfp1.jpg",
-  };
+  const { user } = useWeb3State((state: { user: User }) => state);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]); // Add `user` and `navigate` to dependency array
+
+  if (!user) {
+    return null; // Return nothing or a loading spinner until user is loaded
+  }
+
   return (
     <div className="flex justify-end fixed">
       <div>
         <div className="flex flex-col gap-4 pr-14">
-          <Link className="flex w-full" to={user.link}>
-            <AvatarMD className="size-8" src={user.profilePic} NAME="BR" />
+          <Link className="flex w-full" to={user?._id ? `/creator/${user._id}` : "#"}>
+            <AvatarMD
+              className="size-8"
+              src={user?.profilePic || "defaultAvatar.png"}
+              NAME={user?.address || "User"}
+            />
           </Link>
           <nav className="h-full flex-grow">
             <ul className="flex flex-col gap-8 text-xl">
@@ -40,10 +63,7 @@ export default function NavBar() {
                 </Link>
               </li>
               <li className="hover:text-black text-gray-400">
-                <Link
-                  to={user.link}
-                  className="flex items-center gap-4"
-                >
+                <Link to={user?.link || "#"} className="flex items-center gap-4">
                   <CgProfile className="inline text-4xl" />
                   <h1>My Profile</h1>
                 </Link>

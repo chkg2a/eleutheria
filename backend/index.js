@@ -39,3 +39,5 @@ const startServer=async()=>{
     }
 }
 startServer();
+
+module.export = app;

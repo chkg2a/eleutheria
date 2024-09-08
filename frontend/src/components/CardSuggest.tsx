@@ -13,7 +13,6 @@ export default function CardWithForm(
     .split(" ")
     .map((n) => n[0])
     .join("");
-
   return (
     <div className="mb-2 w-full h-[128px] relative rounded-lg border overflow-hidden">
       <div

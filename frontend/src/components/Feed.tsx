@@ -1,22 +1,28 @@
 import { Link } from "react-router-dom";
 import AvatarMD from "../components/smallComponents/AvatarMD";
+import { formatDistanceToNow } from 'date-fns'; // Import date-fns for easy date formatting
 
 interface FeedProps {
-  address : string,
-  link : string,
-  avatar : string,
-  fullName : string, 
-  paragraph : string,
-  image : string
+  address: string;
+  link: string;
+  avatar: string;
+  fullName: string;
+  paragraph: string;
+  image: string;
+  createdAt: string;
 }
 
 export default function Feed(
-  { address, link, avatar, fullName, paragraph, image } : FeedProps,
+  { address, link, avatar, fullName, paragraph, image, createdAt }: FeedProps,
 ) {
   const initials = fullName
     .split(" ")
     .map((word) => word[0])
     .join("");
+
+  // Format createdAt using date-fns
+  const createdAtDate = new Date(createdAt);
+  const timeAgo = formatDistanceToNow(createdAtDate, { addSuffix: true });
 
   return (
     <div key={address}>
@@ -28,7 +34,7 @@ export default function Feed(
               <h1>{fullName}</h1>
               <p className="text-sm text-gray-400">{address}</p>
             </div>
-            <div className="p-2">5 hours ago</div>
+            <div className="p-2">{timeAgo}</div>
           </Link>
         </div>
         <div className="px-2 w-full">

@@ -1,6 +1,6 @@
 # ELEUTHERIA
 <div align="center">
-  <img src="https://github.com/chkg2a/eleutheria/blob/main/frontend/public/logo.png" alt="My Image" width="300"/>
+  <img src="https://github.com/chkg2a/eleutheria/blob/main/frontend/public/logo.png" alt="My Image" width="150" height="150"/>
 </div>
 We saw a problem in our global economy. Money that you worked hard for, can easily be controlled and regulated and making it hard for you to purchase any form of content. 
 

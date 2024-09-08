@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const CreatePostTest = () => {
     const [title, setTitle] = useState('');
-
     const [description, setDescription] = useState('');
     const [img, setImg] = useState<string>('');
     const handleSubmit = async (e: { preventDefault: () => void }) => {

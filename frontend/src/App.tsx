@@ -43,7 +43,7 @@ function MainLayout() {
               <NavBar />
             </div>
           </div>
-          <div className="col-span-full md:col-span-6 lg:col-span-4 flex flex-col border-gray-300 border-l border-r">
+          <div className="col-span-full md:col-span-6 lg:col-span-4 h-screen flex flex-col border-gray-300 border-l border-r">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/creator/:id" element={<Creators />} />

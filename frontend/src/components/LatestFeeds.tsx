@@ -64,7 +64,7 @@ export default function LatestFeeds({ onlyCreator, userId, isMember = false }: L
   if (onlyCreator && !user) {
     return (
       <div className="w-full flex justify-center items-center h-full text-4xl font-bold">
-        <span className="loading-text"></span>
+        <span className="loader"></span>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function LatestFeeds({ onlyCreator, userId, isMember = false }: L
   if (!onlyCreator && (!users || users.length === 0)) {
     return (
       <div className="w-full flex justify-center items-center h-full text-4xl font-bold">
-        <span className="loading-text"></span>
+        <span className="loader"></span>
       </div>
     );
   }

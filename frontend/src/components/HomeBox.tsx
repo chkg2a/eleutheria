@@ -5,7 +5,7 @@ export default function HomeBox() {
   return (
     <div className="flex w-full justify-between p-5">
       <h1 className="text-xl font-semibold">Home</h1>
-      <PopUp trigger={<div>hell</div>} content={<RxHamburgerMenu />} />
+      <PopUp trigger={<RxHamburgerMenu/>} content={<div>testlas</div>} />
     </div>
   );
 }

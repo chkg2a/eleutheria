@@ -42,12 +42,6 @@ export default function Creator() {
   const [creator, setCreator] = useState<Creator>();
   const [creatorAddress, setcreatorAddress] = useState("");
 
-
-
-  const { contract, setCreatorAddress,member } = useWeb3State((state: Web3State) => state);
-  console.log(member);
-
-
   const [bannerPic, setBannerPic] = useState<string>(""); // For banner picture
   const [profilePic, setProfilePic] = useState<string>(""); // For profile picture
 
@@ -56,7 +50,7 @@ export default function Creator() {
       try {
         const url = `http://localhost:3000/user/post/${id}`;
         const res = await axios.get(url);
-        setCreatorAddress(res.data.user.address);
+        setcreatorAddress(res.data.user.address);
         setCreator(res.data);
       } catch (error) {
         console.error("Error fetching creator:", error);
@@ -179,16 +173,21 @@ export default function Creator() {
     <>
       <div className="w-full h-full">
         <div className="flex flex-col">
-          <div className="w-full h-[400px]">
+          <div className="relative w-full h-[400px]">
             {sameCreator
               ? (
                 <PopUp
                   trigger={
-                    <div className="relative w-full h-[400px] overflow-hidden">
+                    <div className="w-full h-full overflow-hidden">
                       <img
-                        className="absolute top-0 left-0 w-full h-full object-cover"
-                        src={bannerPic || user.profileBanner}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        src={bannerPic || user?.profileBanner ||
+                          "/default-banner.jpg"}
                         alt="Cover"
+                        onError={(e) => {
+                          console.log("Error loading banner image");
+                          e.currentTarget.src = "/default-banner.jpg"; // Fallback image
+                        }}
                       />
                     </div>
                   }
@@ -202,11 +201,15 @@ export default function Creator() {
                 />
               )
               : (
-                <div className="relative w-full h-[400px] overflow-hidden">
+                <div className="relative w-full h-full overflow-hidden">
                   <img
-                    className="absolute top-0 left-0 w-full h-full object-cover"
-                    src={creatorUser.profilePic}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={creatorUser.profileBanner || "/default-banner.jpg"} // Use profileBanner instead of profilePic
                     alt="Cover"
+                    onError={(e) => {
+                      console.log("Error loading creator banner image");
+                      e.currentTarget.src = "/default-banner.jpg"; // Fallback image for creator
+                    }}
                   />
                 </div>
               )}
@@ -237,7 +240,7 @@ export default function Creator() {
                   : (
                     <AvatarMD
                       className="size-32"
-                      src={creatorUser.profilePic}
+                      src={creatorUser.profilePic || "/pfp1.jpg"}
                       NAME={name}
                     />
                   )}
@@ -251,6 +254,7 @@ export default function Creator() {
                 </Link>
               </div>
             </div>
+
             <div className="px-16 mt-[-3rem] mb-10">
               <h1 className="font-bold text-2xl">{name}</h1>
               <p className="font-semibold text-gray-400 text-md">{address}</p>
@@ -258,42 +262,30 @@ export default function Creator() {
                 Last seen 24hrs ago
               </p>
             </div>
-            {sameCreator
-              ? (
-                null
-              )
-              : (
-                <div className="border-t border-b border-gray-400 w-full p-6">
-                  <h1 className="font-semibold text-gray-800 text-xl mb-4">
-                    Subscription
-                  </h1>
-                  <div className="flex justify-evenly">
-                    <ConnectWallet />
-                    <Button
-                      onClick={join}
-                      className="w-full flex justify-between"
-                    >
-                      <span>SUBSCRIBE</span>
-                      <span>FOR FREE</span>
-                    </Button>
-                  </div>
+
+            {!sameCreator && (
+              <div className="border-t border-b border-gray-400 w-full p-6">
+                <h1 className="font-semibold text-gray-800 text-xl mb-4">
+                  Subscription
+                </h1>
+                <div className="flex justify-evenly">
+                  <ConnectWallet />
+                  <Button
+                    onClick={join}
+                    className="w-full flex justify-between"
+                  >
+                    <span>SUBSCRIBE</span>
+                    <span>FOR FREE</span>
+                  </Button>
                 </div>
-              )}
-            {sameCreator
-              ? (
-                <LatestFeeds
-                  onlyCreator
-                  userId={creatorUser._id}
-                  isMember={true}
-                />
-              )
-              : (
-                <LatestFeeds
-                  onlyCreator
-                  userId={creatorUser._id}
-                  isMember={member}
-                />
-              )}
+              </div>
+            )}
+
+            <LatestFeeds
+              onlyCreator
+              userId={creatorUser._id}
+              isMember={sameCreator ? true : member}
+            />
           </div>
         </div>
       </div>

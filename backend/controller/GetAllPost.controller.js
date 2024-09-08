@@ -7,9 +7,9 @@ const GetPost=async(req,res)=>{
 
 
     try {
-        const post=await Post.find({});
-       console.log(post);
-        res.status(200).json({message:"posts fetched successfully",post});
+        const user=await User.find();
+       
+        res.status(200).json({message:"posts fetched successfully",user});
 
 
     } catch (error) {

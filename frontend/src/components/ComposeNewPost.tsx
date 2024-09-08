@@ -24,6 +24,7 @@ export default function NewPost() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        timeout:30000,
       });
       console.log(res);
     } catch (error) {

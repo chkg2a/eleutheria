@@ -5,14 +5,15 @@ import axios from "axios";
 
 export default function LatestFeeds() {
   const [posts, setPosts] = useState<any[]>([]); // Typing as array of any objects for TypeScript
+  const [user, setUser] = useState<any[]>([]); // Typing as array of any objects for TypeScript
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const url="http://localhost:3000/home/getpost";
         const res = await axios.get(url);
+        setUser(res.data)
         setPosts(res.data.post); // Correctly setting the posts
-        console.log(res);
       } catch (error) {
         console.log(error); 
       }

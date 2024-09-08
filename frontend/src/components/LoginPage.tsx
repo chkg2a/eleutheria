@@ -4,8 +4,8 @@ import axios from "axios";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const url = `http://localhost:3000/api/signin`;
@@ -15,9 +15,9 @@ export default function SignUp() {
     }
   };
   return (
-    <div>
+    <div className="w-[350px]">
       <form className="flex flex-col p-4 gap-2" onSubmit={handleSubmit}>
-        <label>Login</label>
+        <label className="text-2xl font-bold">Login</label>
         <input
           className="border border-gray-300 rounded-lg text-lg p-2"
           type="text"
@@ -36,19 +36,14 @@ export default function SignUp() {
         />
         <button
           type="submit"
-          className="rounded-2xl text-center bg-gray-200 p-1 text-sm"
+          className="rounded-2xl text-center bg-gray-200 p-2 text-sm font-bold h-[40px]"
         >
           LOGIN
         </button>
       </form>
-      <div className="flex gap-5">
+      <div className="flex items-center justify-evenly gap-5 text-sm text-gray-500">
         <Link to="/signup">Don't have an Account?</Link>
         <Link to="/forgetPassword">Forgot Password?</Link>
-      </div>
-      <div className="flex flex-col">
-        <button>SIGN IN WITH X</button>
-        <button>SIGN IN WITH GOOGLE</button>
-        <button>PASSWORDLESS SIGN IN</button>
       </div>
     </div>
   );

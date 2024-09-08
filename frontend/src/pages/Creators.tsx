@@ -7,10 +7,24 @@ import AvatarMD from "@/components/smallComponents/AvatarMD";
 import ConnectWallet from "@/components/ConnectWallet";
 import axios from "axios";
 import useWeb3State from "../store/Web3State";
+
+interface Web3State {
+  address: string;
+  provider: string;
+  signer: any;
+  contract: any;
+}
+
+interface Creator {
+  user: Record<string, any>;  // or a more specific type for `user`
+}
+
 export default function Creator() {
   const { id } = useParams(); // Extract the id parameter from the route
-  const [creator, setCreator] = useState(null);
-  const {provider,signer,contract}=useWeb3State((state)=>state);
+  const [creator, setCreator] = useState<Creator>();
+  const { provider, signer, contract } = useWeb3State((state: Web3State) =>
+    state
+  );
   useEffect(() => {
     const handleCreator = async () => {
       try {
@@ -32,14 +46,21 @@ export default function Creator() {
       </div>
     );
   }
-  const join=async()=>{
-    const tx=await contract.join("0x71f6237984e4C2d9030A71f57BFD3BA146180cA4");
+  const join = async () => {
+    const tx = await contract.join(
+      "0x71f6237984e4C2d9030A71f57BFD3BA146180cA4",
+    );
     tx.wait();
     alert("tx");
-  }
+  };
 
-  const user = creator?.user || {}; // Safe access to nested properties
-  const { name = "Unknown", address = "Unknown Address", profilePic = "defaultAvatar.png"} = user; // Default values for user data
+
+  const user = creator?.user || {};
+  const {
+    name = "Unknown",
+    address = "Unknown Address",
+    profilePic = "defaultAvatar.png",
+  } = user; // Default values for user data
 
   return (
     <>
@@ -103,10 +124,10 @@ export default function Creator() {
               <h1 className="font-semibold text-gray-800 text-xl mb-4">
                 Subscription
               </h1>
-              <ConnectWallet/>
+              <ConnectWallet />
             </div>
 
-          <button onClick={join}>join</button>
+            <button onClick={join}>join</button>
           </div>
         </div>
       </div>

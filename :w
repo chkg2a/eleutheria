@@ -1,6 +1,7 @@
+
 export default function Banner() {
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <div className="flex justify-center items-center w-full">
       <div className="flex flex-col text-white">
         <div className="flex">
           <img src="/logo.png" alt="logo" width={150} height={150} />

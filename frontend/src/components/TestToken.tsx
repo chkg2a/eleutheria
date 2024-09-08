@@ -1,9 +1,9 @@
 import React from 'react';
 import { jwtDecode } from "jwt-decode"; // Default import for the jwt-decode library
-
+import { useNavigate } from 'react-router-dom';
 const TestToken = () => {
     const token = localStorage.getItem("token");
-
+    const navigate = useNavigate();
     const isTokenExpired = () => {
         if (token) {
             const decodedToken = jwtDecode(token); // Call jwt_decode to decode the token
@@ -14,6 +14,10 @@ const TestToken = () => {
             if(tokenTime<currentTime){
                 localStorage.removeItem("token");
                 console.log("token removed");
+                navigate('/login');
+            }
+            if(!token){
+                navigate('/login');
             }
         }
     };

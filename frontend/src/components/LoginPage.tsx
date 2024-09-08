@@ -10,6 +10,7 @@ export default function SignUp() {
     e.preventDefault();
     const url = `http://localhost:3000/api/signin`;
     const res = await axios.post(url, { email, password });
+    localStorage.setItem("token", res.data.token);
     if(res.status === 200){
       navigate('/')
     }
